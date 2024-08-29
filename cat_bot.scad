@@ -123,10 +123,10 @@ interior_lid_mounting_hole_d = 4;  // M3 brass insert
 interior_lid_mounting_hole_cd1 = 3.1;
 
 // screw hole countersink diameter
-interior_lid_mounting_hole_cd2 = 5.6;
+interior_lid_mounting_hole_cd2 = 5.7;
 
 // height of the screw head
-interior_lid_mounting_hole_ch = 1.65;
+interior_lid_mounting_hole_ch = 2;
 
 // min gap between interior features and the shelf (note: weapon has a separate variable, weapon_wall_gap)
 interior_wall_gap = 4.0;
@@ -1082,7 +1082,9 @@ module lid_bottom() {
             }
 
             // interior shape    
-            chassis_interior(base_w, weapon_w, body_w, plough_w, base_d, base_h-(interior_lid_thickness*2), interior_wall_thickness+interior_wall_gap);
+            chassis_interior(base_w, weapon_w, body_w, plough_w, base_d, base_h-(interior_lid_thickness), interior_wall_thickness+interior_wall_gap);
+
+            // chassis_shell();
         }
     }
 }
