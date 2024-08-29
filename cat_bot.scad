@@ -85,7 +85,7 @@ weapon_offset = [15.4, 0, 0];
 // thickness of the protective walls around the spinner
 weapon_wall_thickness = 2;
 
-// gap between the spinner area and the protective walls
+// gap between the spinner area and the protective walls (note: other interior stuff has a separate variable, interior_wall_gap)
 weapon_wall_gap = 2;
 
 /* [Chassis Features] */
@@ -127,6 +127,9 @@ interior_lid_mounting_hole_cd2 = 5.6;
 
 // height of the screw head
 interior_lid_mounting_hole_ch = 1.65;
+
+// min gap between interior features and the shelf (note: weapon has a separate variable, weapon_wall_gap)
+interior_wall_gap = 4.0;
 
 /* [Lid Mounting Hole Positions] */
 
@@ -195,7 +198,7 @@ wheel_diameter_padding = 5; // .1
 wheel_separation = 88; // .1
 
 // vector by which to offset the wheels from the centre of the bot
-wheel_offset = [15, 0, 0];
+wheel_offset = [15, 0, 0]; //.1
 
 // diameter of the gearbox axel
 wheel_axel_d = 3; // .1
@@ -1049,27 +1052,37 @@ module lid_bottom() {
 
         }
 
-        // wheel walls
-        if (interior_show_wheel_walls) interior_wheel_walls();
+        // make sure extra interior bits don't collide with shelf
+        intersection() {
+            union() {
 
-        // spinner walls
-        if (interior_show_weapon_walls) interior_weapon_walls();
+                // wheel walls
+                if (interior_show_wheel_walls) interior_wheel_walls();
 
-        // gearbox mounting
-        if (interior_show_gearbox_mounting) {
+                // spinner walls
+                if (interior_show_weapon_walls) interior_weapon_walls();
 
-            // tamiya double
-            if (interior_gearbox == "double") {
-                interior_gearbox_double_mounting();
+                // gearbox mounting
+                if (interior_show_gearbox_mounting) {
+
+                    // tamiya double
+                    if (interior_gearbox == "double") {
+                        interior_gearbox_double_mounting();
+                    }
+
+                    // micro metal
+                    else if (interior_gearbox == "micro") {
+                        interior_gearbox_micro_mounting();
+                    }
+
+                    // no gearbox selected
+                    else {}
+                }
+
             }
 
-            // micro metal
-            else if (interior_gearbox == "micro") {
-                interior_gearbox_micro_mounting();
-            }
-
-            // no gearbox selected
-            else {}
+            // interior shape    
+            chassis_interior(base_w, weapon_w, body_w, plough_w, base_d, base_h-(interior_lid_thickness*2), interior_wall_thickness+interior_wall_gap);
         }
     }
 }
