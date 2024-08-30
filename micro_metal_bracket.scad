@@ -8,14 +8,14 @@ srs = [[0, 1], [4.9, 1], [8.1, 1]]; // sections of smaller radius (pairs of 2-ve
 // srs = [[0, 1.2], [4.3, 1.2], [7.6, 1.2]]; // sections of smaller radius (pairs of 2-vectors where [0] is the x offset and [1] is the length)
 d = 12;         // y axis length of the inside's
 h = 10;         // z axis height of the inside
-t = 3;          // thickness of the bracket
+t = 2;          // thickness of the bracket
 ro = 1.5;       // outer radius of the bracket
 ri = 2.5;      // inner radius of the inside
 ris = 0.5;      // inner radius of the parts of the inside in reduced radius regions (as per hrs)
 fw = w;     // x axis width of the flanges
-fd = 6;         // y axis length of the flanges
+fd = 8;         // y axis length of the flanges
 fh = t;         // z axis thickness of the flanges
-fhd = 3.1;      // diameter of the holes in the flange
+fhd = 3.5;      // diameter of the holes in the flange
 fr = 1.5;       // radius of the flanges' corners
 fn = 2;         // number of holes
 fhm = 0.6;      // how much of the flange should the holes take up
@@ -69,7 +69,7 @@ module micro_metal_bracket() {
 
             for (i = [0:fn-1]) {
                 xo = (fw/2)-(hw/2)+(s*i);
-                yo = (fd/2)+((fd/2)*(1-hi));
+                yo = (fd/2) + (t*(1-hi)); //(fd/2)+((fd/2)*(1-hi));
                 echo("hole offset", i, "x=", xo, "y=", yo);
                 translate([xo, yo, -0.5])
                 cylinder(h=fh+1, d=fhd);
@@ -85,5 +85,5 @@ micro_metal_bracket();
 
 color("silver")
 rotate([0, 0, 90])
-translate([3, -9, 10])
+translate([t, -9, 10])
 import("imports/N20 v2.stl");

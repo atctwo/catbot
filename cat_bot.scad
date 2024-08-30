@@ -802,10 +802,11 @@ module interior_gearbox_micro_mounting() {
     screw_hole_d = 4; // brass insert for M3 screw
     screw_hole_h = 4.1;
 
-    bracket_w = 30;
+    // micro_metal_bracket.scad will echo the bracket dimensions, but remember that the model is rotates 90° here so they're backwards
+    bracket_w = 32;
     bracket_d = 24;
     bracket_h = 16;
-    bracket_t = 3;
+    bracket_t = 2;
     bracket_x = bracket_t + (box_base_w/2) + 6;
     hole_xd = 14.4;
     hole_yd = 21.1;
