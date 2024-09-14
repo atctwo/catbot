@@ -99,7 +99,7 @@ chassis_show_weapon_hole = true;
 interior_wall_thickness = 3;
 
 // thickness of the lids
-interior_lid_thickness = 4;
+interior_lid_thickness = 3;
 
 // gap between outer edge of lids and inner edge of interior
 interior_lid_gap = 0.5;
@@ -119,14 +119,16 @@ interior_lid_mounting_r = 2;
 // diameter of the mounting hole
 interior_lid_mounting_hole_d = 4;  // M3 brass insert
 
+// screw diameters have 0.5mm added for normal padding, and an extra 0.4mm for my shrinky filament
+
 // screw hole diameter
-interior_lid_mounting_hole_cd1 = 3.1;
+interior_lid_mounting_hole_cd1 = 3.5;
 
 // screw hole countersink diameter
-interior_lid_mounting_hole_cd2 = 5.7;
+interior_lid_mounting_hole_cd2 = 6.2;
 
 // height of the screw head
-interior_lid_mounting_hole_ch = 2;
+interior_lid_mounting_hole_ch = 2.5;
 
 // min gap between interior features and the shelf (note: weapon has a separate variable, weapon_wall_gap)
 interior_wall_gap = 4.0;
@@ -195,7 +197,7 @@ wheel_diameter = 42; // .1
 wheel_diameter_padding = 5; // .1
 
 // distance of the centres of the two wheels from the centre of the robot
-wheel_separation = 88; // .1
+wheel_separation = 96; // .1
 
 // vector by which to offset the wheels from the centre of the bot
 wheel_offset = [15, 0, 0]; //.1
@@ -224,7 +226,7 @@ lid_main_decoration_offset = [-25, 0, 0];
 lid_show_qrs_logo = true;
 
 // dpi of the QRS logo on the lids (bigger DPI -> smaller physical size)
-qrs_logo_dpi = 450; 
+qrs_logo_dpi = 425; 
 
 // size of the QRS logo in "pixels" (depends on the SVG file)
 qrs_logo_size_px = [491, 400];
@@ -236,13 +238,13 @@ lid_show_whiskers = true;
 whisker_length = 24;
 
 // thickness of each whisker
-whisker_thickness = 3;
+whisker_thickness = 4;
 
 // radius of the corners on each whisker
-whisker_radius = 1;
+whisker_radius = 1.2;
 
 // distance between each whisker and the qrs logo
-whisker_distance = -(whisker_length/2) + 8; // center = true
+whisker_distance = -(whisker_length/2) + 5; // center = true
 // whisker_distance = 5; // center = false
 
 // the angle at which the top and bottom whiskers are rotated
@@ -254,7 +256,7 @@ whisker_rotation = 18;
 tpu_thickness = 3;
 
 // gap between the tpu shielding and the outside of the chassis (eats into the tpu thickness)
-tpu_gap = 1;
+tpu_gap = 0.1; // .1
 
 // whether to show a gap in the shielding for the spinner
 tpu_show_weapon_hole = true;
