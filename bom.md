@@ -17,7 +17,7 @@ This BOM is split into three parts, based on which configuration you're making. 
 | Item                        | Qty | Description and Notes                      |
 |-----------------------------|-----|--------------------------------------------|
 | **Motors and Wheels**       |     |                                            |
-| Micro Metal Gearbox         | 2   | 294:1 ratio probably, TBD                  |
+| Micro Metal Gearbox         | 2   | 298:1 ratio is recommended                 |
 | Micro Metal Bracket         | 2   | Separate model in this repo ([source](micro_metal_bracket.scad), [STL](renders/micro_metal_bracket.stl))|
 | **Screws**                  |     |                                            |
 | M3x10 (countersunk)         | 8   | Mounting screws for lids; at least 10mm long |
