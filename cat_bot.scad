@@ -256,7 +256,7 @@ whisker_rotation = 18;
 tpu_thickness = 3;
 
 // gap between the tpu shielding and the outside of the chassis (eats into the tpu thickness)
-tpu_gap = 0.1; // .1
+tpu_gap = -0.5; // .1
 
 // whether to show a gap in the shielding for the spinner
 tpu_show_weapon_hole = true;
