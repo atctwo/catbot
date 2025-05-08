@@ -893,12 +893,20 @@ module interior_spinner() {
         cylinder(d=weapon_diameter, h=weapon_thickness);
 
         // area with padding, for making holes
-        color("Silver", 0.2)
-        translate([0, 0, -(weapon_thickness_padding)/2])
-        cylinder(
-            d=weapon_diameter + weapon_diameter_padding, 
-            h=weapon_thickness + weapon_thickness_padding
-        );
+        // color("Silver", 0.2)
+        // translate([0, 0, -(weapon_thickness_padding)/2])
+        // cylinder(
+        //     d=weapon_diameter + weapon_diameter_padding, 
+        //     h=weapon_thickness + weapon_thickness_padding
+        // );
+
+        color("Blue", 0.2)
+        translate([-weapon_offset.x/2, 0, weapon_thickness/2])
+        scale([
+            weapon_diameter + weapon_diameter_padding, 
+            weapon_diameter + weapon_diameter_padding, 
+            weapon_thickness + weapon_thickness_padding])
+        sphere(d=1);
     }
 }
 
