@@ -62,7 +62,7 @@ weapon_h = base_h;
 /* [Weapon Size and Position] */
 
 // diameter of the spinner
-weapon_diameter = 60;
+weapon_diameter = 60.33;
 
 // thickness of the spinner
 weapon_thickness = 3;
@@ -74,7 +74,7 @@ weapon_diameter_padding = 10;
 weapon_thickness_padding = 10;
 
 // height from the top of the bottom lid that the spinner sits (ie: motor height)
-weapon_z = 21.5;
+weapon_z = 18.5;
 
 // diameter of the spinner motor
 weapon_motor_diameter = 23;
@@ -1125,7 +1125,7 @@ module lid_bottom() {
 
 module tpu_shielding() {
 
-    tpu_c = show_tpu_shielding_colour ? "#222222": undef;
+    tpu_c = show_tpu_shielding_colour ? "#444444": undef;
     color(tpu_c) 
     difference() {
         translate([-tpu_thickness, -tpu_thickness, 0.01]) 
