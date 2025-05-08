@@ -252,22 +252,35 @@ whisker_rotation = 18;
 
 /* [TPU Shielding] */
 
-// starting thickness of the TPU shielding
-tpu_thickness = 3;
-
 // gap between the tpu shielding and the outside of the chassis (eats into the tpu thickness)
-tpu_gap = -0.5; // .1
+tpu_gap = 0; // .1
+
+// starting thickness of the TPU shielding
+tpu_thickness_raw = 3;
 
 // whether to show a gap in the shielding for the spinner
 tpu_show_weapon_hole = true;
 
 /* [Calculated Variables] */
 
+// what's the real value of the tpu thickness?  the tpu gap eats into the tpu thickness, so
+// this makes sure the value specified as the thickness accounts for how much will be lost
+// to the gap
+tpu_thickness = tpu_gap + tpu_thickness_raw;
+
+// previous versions of the bot had the body size dependant on the tpu shielding size.
+// this was messing up the interface between the bot and the shielding, so i decoupled
+// the two parameters.  however the dimensions of parts i had already printed still had
+// those dependancies so i've hardcoded them here.  in future versions these will hopefully
+// be set to zero
+old_tpu_thickness = 2;
+old_tpu_gap = 1;
+
 // base width of the whole bot, minus the tpu shielding
-base_w = base_w_raw - (tpu_thickness + tpu_gap) * 2;
+base_w = base_w_raw - (old_tpu_thickness + old_tpu_gap) * 2;
 
 // base length of the whole bot, minus the tpu shielding
-base_d = base_d_raw - (tpu_thickness + tpu_gap) * 2;
+base_d = base_d_raw - (old_tpu_thickness + old_tpu_gap) * 2;
 
 // width of the body
 body_w = base_w - weapon_w - plough_w;
