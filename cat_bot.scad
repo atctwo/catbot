@@ -914,12 +914,28 @@ module interior_spinner() {
         // );
 
         color("Blue", 0.2)
-        translate([-weapon_offset.x/2, 0, weapon_thickness/2])
+        hull() {
+            st = (weapon_thickness + weapon_thickness_padding) / 2;
+            off = 2;
+
+            color("Blue", 0.2)
+            // translate([-weapon_offset.x/2, 0, weapon_thickness/2])
+            translate([-weapon_offset.x/2, 0, st - (weapon_thickness/2) - off])
         scale([
             weapon_diameter + weapon_diameter_padding, 
             weapon_diameter + weapon_diameter_padding, 
-            weapon_thickness + weapon_thickness_padding])
+                (weapon_thickness + weapon_thickness_padding)])
+            sphere(d=1);
+
+            color("Green", 0.2)
+            // translate([-weapon_offset.x/2, 0, weapon_thickness/2])
+            translate([-weapon_offset.x/2, 0, (-weapon_thickness/2) + off])
+            scale([
+                weapon_diameter + weapon_diameter_padding, 
+                weapon_diameter + weapon_diameter_padding, 
+                (weapon_thickness + weapon_thickness_padding)])
         sphere(d=1);
+        }
     }
 }
 
