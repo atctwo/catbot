@@ -79,6 +79,9 @@ weapon_z = 18.5;
 // diameter of the spinner motor
 weapon_motor_diameter = 23;
 
+// if the motor eats into the main chassis, pad it by this much
+weapon_motor_padding = 3;
+
 // extra offset for the motor and spinner
 weapon_offset = [15.4, 0, 0];
 
@@ -578,6 +581,8 @@ module chassis_interior(w, ww, bw, pw, d, h, gap) {
 module chassis_shell() {
 
     color("#222222")
+    difference() {
+        union() {
     difference() 
     {
         // outer shell
@@ -612,6 +617,14 @@ module chassis_shell() {
                 }
             }
         }
+            }
+        }
+
+        // padding around the motor
+        color("Red")
+        translate(weapon_offset)
+        translate([0, base_d/2, interior_lid_thickness-0.5]) 
+        cylinder(d=weapon_motor_diameter+weapon_motor_padding, h=weapon_z+1);
     }
 
     // lid mounting posts
