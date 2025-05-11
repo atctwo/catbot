@@ -253,7 +253,7 @@ whisker_rotation = 18;
 /* [TPU Shielding] */
 
 // gap between the tpu shielding and the outside of the chassis (eats into the tpu thickness)
-tpu_gap = 0; // .1
+tpu_gap = -1; // .1
 
 // starting thickness of the TPU shielding
 tpu_thickness_raw = 3;
