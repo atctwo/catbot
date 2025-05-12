@@ -233,7 +233,7 @@ interior_power_switch_mount_h = 4;
 /* [Wheels and Gearbox Size and Position] */
 
 // thickness / tread size of the wheels
-wheel_tread = 19; // .1
+wheel_tread = 18; // .1
 
 // padding to add to the wheel holes for the tread
 wheel_tread_padding = 3; // .1
@@ -261,6 +261,9 @@ wheel_wall_radius = 2; // .1
 
 // radius of the blocks that make up the gearbox mount
 gearbox_mount_radius = 2; // .1
+
+// this can be used to move the motors closer together
+bracket_y_offset = 0.5;
 
 /* [Lid Decoration] */
 
@@ -793,8 +796,8 @@ module interior_wheel_walls() {
             roundedCube([outer_w, outer_d, wall_h], wheel_wall_radius, sidesonly=true);
             
             // inner wall
-            translate([-(wheel_d/2), ((base_d)/2) - (wheel_separation/2) - (wheel_h/2), 0])
-            roundedCube([wheel_d, wheel_h, wall_h + 1], wheel_wall_radius, sidesonly=true);
+            translate([-(wheel_d/2), ((base_d)/2) - (wheel_separation/2) - (wheel_h/2) - wheel_h, 0])
+            roundedCube([wheel_d, wheel_h*2, wall_h + 1], wheel_wall_radius, sidesonly=true);
         
             // gap for axel
             translate([-gap_w/2, ((base_d)/2) - (wheel_separation/2) + (wheel_h/2) - (wheel_wall_thickness/2), 0])
@@ -808,7 +811,7 @@ module interior_wheel_walls() {
             
             // inner wall
             translate([-(wheel_d/2), ((base_d)/2) + (wheel_separation/2) - (wheel_h/2), 0])
-            roundedCube([wheel_d, wheel_h, wall_h + 1], wheel_wall_radius, sidesonly=true);
+            roundedCube([wheel_d, wheel_h*2, wall_h + 1], wheel_wall_radius, sidesonly=true);
 
             // gap for axel
             translate([-gap_w/2, ((base_d)/2) + (wheel_separation/2) - (wheel_h/2) - (wheel_wall_thickness * 1.5), 0])
@@ -850,7 +853,7 @@ module interior_gearbox_micro() {
     // translate([24, -8, -8])  // set origin to middle of gearbox
     
     color("silver")
-    translate([-6, 0, 5])
+    translate([-6, -bracket_y_offset+2.5, 5])
     import("imports/N20 v2.stl");
 }
 
@@ -899,7 +902,7 @@ module interior_gearbox_micro_mounting() {
 
     gearbox_h = 10;
     box_base_w = wheel_diameter + wheel_diameter_padding;
-    box_base_d = wheel_separation - (wheel_tread+wheel_tread_padding) - (wheel_wall_thickness*2) - 5;
+    box_base_d = wheel_separation - (wheel_tread+wheel_tread_padding) - (wheel_wall_thickness*2);
     box_base_h = (base_h/2) - (gearbox_h/2) - interior_lid_thickness;
     screw_hole_d = 4; // brass insert for M3 screw
     screw_hole_h = 4.1;
@@ -919,7 +922,8 @@ module interior_gearbox_micro_mounting() {
         difference() {
 
             // mounting block (extra 3mm for lipo to sit on)
-            roundedCube([box_base_w+3, box_base_d, box_base_h], gearbox_mount_radius, sidesonly=true);
+            // roundedCube([box_base_w+3, box_base_d, box_base_h], gearbox_mount_radius, sidesonly=true);
+            cube([box_base_w, box_base_d, box_base_h]);
 
             /*
             ECHO: "hole offset", 0, "x=", 4.8, "y=", 3
@@ -929,35 +933,35 @@ module interior_gearbox_micro_mounting() {
             */
 
             // mounting hole L1
-            translate([(box_base_w/2)-(bracket_d/2), 4.8, box_base_h - screw_hole_h])
+            translate([(box_base_w/2)-(bracket_d/2), 4.8+bracket_y_offset, box_base_h - screw_hole_h])
             cylinder(d=screw_hole_d, h=screw_hole_h+1);
 
             // mounting hole L2
-            translate([(box_base_w/2)-(bracket_d/2), 19.2, box_base_h - screw_hole_h])
+            translate([(box_base_w/2)-(bracket_d/2), 19.2+bracket_y_offset, box_base_h - screw_hole_h])
             cylinder(d=screw_hole_d, h=screw_hole_h+1);
 
             // mounting hole L3
-            translate([(box_base_w/2)+(bracket_d/2), 4.8, box_base_h - screw_hole_h])
+            translate([(box_base_w/2)+(bracket_d/2), 4.8+bracket_y_offset, box_base_h - screw_hole_h])
             cylinder(d=screw_hole_d, h=screw_hole_h+1);
 
             // mounting hole L4
-            translate([(box_base_w/2)+(bracket_d/2), 19.2, box_base_h - screw_hole_h])
+            translate([(box_base_w/2)+(bracket_d/2), 19.2+bracket_y_offset, box_base_h - screw_hole_h])
             cylinder(d=screw_hole_d, h=screw_hole_h+1);
 
             // mounting hole R1
-            translate([(box_base_w/2)-(bracket_d/2), (box_base_d-bracket_d) + 4.8, box_base_h - screw_hole_h])
+            translate([(box_base_w/2)-(bracket_d/2), (box_base_d-bracket_d) + 4.8 - bracket_y_offset, box_base_h - screw_hole_h])
             cylinder(d=screw_hole_d, h=screw_hole_h+1);
 
             // mounting hole R2
-            translate([(box_base_w/2)-(bracket_d/2), (box_base_d-bracket_d) + 19.2, box_base_h - screw_hole_h])
+            translate([(box_base_w/2)-(bracket_d/2), (box_base_d-bracket_d) + 19.2 - bracket_y_offset, box_base_h - screw_hole_h])
             cylinder(d=screw_hole_d, h=screw_hole_h+1);
 
             // mounting hole R3
-            translate([(box_base_w/2)+(bracket_d/2), (box_base_d-bracket_d) + 4.8, box_base_h - screw_hole_h])
+            translate([(box_base_w/2)+(bracket_d/2), (box_base_d-bracket_d) + 4.8 - bracket_y_offset, box_base_h - screw_hole_h])
             cylinder(d=screw_hole_d, h=screw_hole_h+1);
 
             // mounting hole R4
-            translate([(box_base_w/2)+(bracket_d/2), (box_base_d-bracket_d) + 19.2, box_base_h - screw_hole_h])
+            translate([(box_base_w/2)+(bracket_d/2), (box_base_d-bracket_d) + 19.2 - bracket_y_offset, box_base_h - screw_hole_h])
             cylinder(d=screw_hole_d, h=screw_hole_h+1);
 
         }
@@ -966,12 +970,12 @@ module interior_gearbox_micro_mounting() {
         explode(60) // exploding here since this isn't called at EOF
         if (show_gearbox) {
             // left bracket
-            translate([bracket_x, 0, box_base_h])
+            translate([bracket_x, bracket_y_offset, box_base_h])
             rotate([0, 0, 90])
             micro_metal_bracket();
 
             // right bracket
-            translate([bracket_x, box_base_d-bracket_d, box_base_h])
+            translate([bracket_x, (box_base_d-bracket_d)-bracket_y_offset, box_base_h])
             rotate([0, 0, 90])
             micro_metal_bracket();
         }
