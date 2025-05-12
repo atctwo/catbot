@@ -85,6 +85,27 @@ weapon_motor_padding = 3;
 // extra offset for the motor and spinner
 weapon_offset = [15.4, 0, 0];
 
+// diameter of weapon screw holes (main body)
+weapon_mount_screw_cd1 = 2.5;
+
+// diameter of weapon screw holes (countersink)
+weapon_mount_screw_cd2 = 3.8;
+
+// size of the countersunk head of weapon screw holes
+weapon_mount_screw_ch = 1.4;
+
+// positions of the screws holes for the weapon (expressed as distances from the motor axle)
+weapon_mount_screws = [
+    [0,-8], [0,8],
+    [-6,0], [6,0]
+];
+
+// do you want a big hole where the axle sticks out the bottom of the motor?
+weapon_axle_hole_d = 4;
+
+// how deep do you want that hole to be?  as a percent of the lid thickness
+weapon_axle_hole_h = 0.5;
+
 // thickness of the protective walls around the spinner
 weapon_wall_thickness = 2;
 
@@ -962,6 +983,35 @@ module interior_motor() {
     cylinder(d=weapon_motor_diameter, h=weapon_z);
 }
 
+// screw holes for the motor
+module weapon_motor_screw_holes() {
+
+    translate([0, 0, -0.1]) {
+
+    // screw hole
+    for (screw=weapon_mount_screws) {
+        translate([screw.x, screw.y, ]) {
+        
+            // threaded bit
+            translate([0, 0, weapon_mount_screw_ch-0.5])
+            cylinder(d=weapon_mount_screw_cd1, h=interior_lid_thickness-weapon_mount_screw_ch+1);
+
+            // countersunk head
+            cylinder(
+                d1=weapon_mount_screw_cd2,
+                d2=weapon_mount_screw_cd1,
+                h=weapon_mount_screw_ch
+            );
+        }
+    }
+
+    // axle hole
+    translate([0,0,interior_lid_thickness-(interior_lid_thickness*weapon_axle_hole_h)])
+    cylinder(d=weapon_axle_hole_d, h=(interior_lid_thickness*weapon_axle_hole_h)+0.5);
+
+    }
+}
+
 /*
  * Interior walls around the spinner area on the bottom lid
  */
@@ -1102,6 +1152,11 @@ module lid_bottom() {
                     h=interior_lid_thickness+1
                 );
             }
+
+            // weapon motor screw holes
+            translate(weapon_offset)
+            translate([0, base_d/2, 0]) 
+            weapon_motor_screw_holes();
 
         }
 
