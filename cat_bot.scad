@@ -68,7 +68,7 @@ weapon_diameter = 60.33;
 weapon_thickness = 3;
 
 // extra diameter to add to the spinner to make the hole wider
-weapon_diameter_padding = 10;
+weapon_diameter_padding = 5;
 
 // extra thickness to add to the spinner to make the hole taller
 weapon_thickness_padding = 10;
@@ -120,7 +120,7 @@ chassis_show_weapon_hole = true;
 /* [Interior and Lid Dimensions] */
 
 // thickness of the shell's walls
-interior_wall_thickness = 3;
+interior_wall_thickness = 2.5;
 
 // thickness of the lids
 interior_lid_thickness = 3;
@@ -163,13 +163,13 @@ interior_wall_gap = 4.0;
 lid_mh_tlw = 0.8; // .1
 
 // how far along the x axis the bottom left post is
-lid_mh_blw = 2.0; // .1
+lid_mh_blw = 1.8; // .1
 
 // how far along the x axis the top right post is
 lid_mh_trw = 0.8; // .1
 
 // how far along the x axis the bottom right post is
-lid_mh_brw = 2.0; // .1
+lid_mh_brw = 1.8; // .1
 
 // how far along the y axis the top left post is
 lid_mh_tld = 1.0; // .1
@@ -178,10 +178,10 @@ lid_mh_tld = 1.0; // .1
 lid_mh_trd = 1.0; // .1
 
 // how far along the y axis the top left post is
-lid_mh_bld = 1.0; // .1
+lid_mh_bld = 0.9; // .1
 
 // how far along the y axis the top right post is
-lid_mh_brd = 1.0; // .1
+lid_mh_brd = 0.9; // .1
 
 /* [Interior and Lid Features] */
 
@@ -367,6 +367,9 @@ show_weapon = true;
 
 // whether to show the spinner motor
 show_weapon_motor = true;
+
+// whether to show the power switch
+show_switch = true;
 
 // show the mock lipo battery
 show_lipo = false;
