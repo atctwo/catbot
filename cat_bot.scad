@@ -203,6 +203,15 @@ interior_show_gearbox_mounting = true;
 // whether to create walls around the spinner area
 interior_show_weapon_walls = true;
 
+// whether to have a wee hole for the wires to go out of
+interior_weapon_wall_hole = true;
+
+// diameter of the hole
+interior_weapon_wall_hole_d = 5;
+
+// angle along the weapon wall to have the hole
+interior_weapon_wall_hole_a = 45;
+
 // padding to add to things on the interior that go up against the inner shelf
 interior_padding_against_shelf = 1;
 
@@ -1079,6 +1088,13 @@ module interior_weapon_walls() {
                         h=base_h - (interior_lid_thickness*2) + 1
                     );
 
+                    // hole for weapon motor wires
+                    if (interior_weapon_wall_hole) {
+                        rotate([0, 0, interior_weapon_wall_hole_a])
+                        translate([(weapon_diameter + weapon_diameter_padding + weapon_wall_gap)/2-interior_weapon_wall_hole_d, 0, 0])
+                        rotate([0,90, 0])
+                        cylinder(d=interior_weapon_wall_hole_d, h=interior_weapon_wall_hole_d*2);
+                    }
                 }
             }
 
