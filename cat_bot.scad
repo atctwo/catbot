@@ -206,6 +206,21 @@ interior_show_weapon_walls = true;
 // padding to add to things on the interior that go up against the inner shelf
 interior_padding_against_shelf = 1;
 
+// power switch position x coord
+interior_power_switch_x = 48;
+
+// power switch position z offset (by default it's in the middle)
+interior_power_switch_z_offset = 0;
+
+// size of the hole to make for the power switch
+interior_power_switch_hole = [8, 4.5];
+
+// diameter of the holes to make for the switch mounts
+interior_power_switch_mount_d = 1.75;
+
+// depth of the holes to make for the switch mounts
+interior_power_switch_mount_h = 4;
+
 /* [Wheels and Gearbox Size and Position] */
 
 // thickness / tread size of the wheels
@@ -646,6 +661,32 @@ module chassis_shell() {
         translate(weapon_offset)
         translate([0, base_d/2, interior_lid_thickness-0.5]) 
         cylinder(d=weapon_motor_diameter+weapon_motor_padding, h=weapon_z+1);
+
+        // switch holes
+        translate([
+            interior_power_switch_x, 
+            0, 
+            (base_h/2)+interior_power_switch_z_offset]) {
+
+            // hole for the switch lever
+            translate([0, (interior_wall_thickness+interior_shelf_thickness)/2, 0])
+            rotate([90,0,0])
+            #roundedCube([
+                interior_power_switch_hole.y,
+                interior_power_switch_hole.x,
+                interior_wall_thickness+interior_shelf_thickness+1
+            ], 1, center=true, sidesonly=true);
+
+            // mounting holes
+            #translate([0, (interior_wall_thickness+interior_shelf_thickness)+0.5, 7])
+            rotate([90, 0, 0])
+            cylinder(d=interior_power_switch_mount_h, h=interior_power_switch_mount_d+1);
+
+            #translate([0, (interior_wall_thickness+interior_shelf_thickness)+0.5, -7])
+            rotate([90, 0, 0])
+            cylinder(d=interior_power_switch_mount_h, h=interior_power_switch_mount_d+1);
+
+        }
     }
 
     // lid mounting posts
@@ -1052,6 +1093,21 @@ module interior_lipo() {
     cube(lipo_size);
 }
 
+
+/*
+ * Power switch
+ */
+module interior_switch() {
+
+    translate([
+        interior_power_switch_x, 
+        interior_wall_thickness+interior_shelf_thickness, 
+        (base_h/2)+interior_power_switch_z_offset])
+    rotate([90, 90, 0])
+    import("imports/switch.stl");
+
+}
+
 ///////////////////////////////////////////
 //
 //   Chassis Lids
@@ -1299,3 +1355,4 @@ if (show_gearbox)       explode(35) {
 }
 
 if (show_lipo)          explode(30) interior_lipo();
+if (show_switch)        explode(30) interior_switch();
