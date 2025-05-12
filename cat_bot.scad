@@ -101,7 +101,7 @@ weapon_mount_screws = [
 ];
 
 // do you want a big hole where the axle sticks out the bottom of the motor?
-weapon_axle_hole_d = 4;
+weapon_axle_hole_d = 4.5;
 
 // how deep do you want that hole to be?  as a percent of the lid thickness
 weapon_axle_hole_h = 0.5;
