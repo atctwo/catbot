@@ -683,18 +683,18 @@ module chassis_shell() {
             // hole for the switch lever
             translate([0, (interior_wall_thickness+interior_shelf_thickness)/2, 0])
             rotate([90,0,0])
-            #roundedCube([
+            roundedCube([
                 interior_power_switch_hole.y,
                 interior_power_switch_hole.x,
                 interior_wall_thickness+interior_shelf_thickness+1
             ], 1, center=true, sidesonly=true);
 
             // mounting holes
-            #translate([0, (interior_wall_thickness+interior_shelf_thickness)+0.5, 7])
+            translate([0, (interior_wall_thickness+interior_shelf_thickness)+0.5, 7])
             rotate([90, 0, 0])
             cylinder(d=interior_power_switch_mount_h, h=interior_power_switch_mount_d+1);
 
-            #translate([0, (interior_wall_thickness+interior_shelf_thickness)+0.5, -7])
+            translate([0, (interior_wall_thickness+interior_shelf_thickness)+0.5, -7])
             rotate([90, 0, 0])
             cylinder(d=interior_power_switch_mount_h, h=interior_power_switch_mount_d+1);
 
