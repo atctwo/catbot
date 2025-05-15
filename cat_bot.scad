@@ -1323,6 +1323,24 @@ module tpu_shielding() {
         if (tpu_show_weapon_hole) {
             interior_spinner();
         }
+
+        // switch hole
+        translate([
+            interior_power_switch_x, 
+            0, 
+            (base_h/2)+interior_power_switch_z_offset
+        ]) {
+
+            // hole for the switch lever
+            translate([0, -1, 0])
+            rotate([90,0,0])
+            roundedCube([
+                interior_power_switch_hole.y,
+                interior_power_switch_hole.x,
+                tpu_thickness+10
+            ], 1, center=true, sidesonly=true);
+        
+        }
     }
 
 }
