@@ -23,10 +23,10 @@ use <micro_metal_bracket.scad>
 /* [Base Dimensions] */
 
 // base width of the whole bot
-base_w_raw = 140;
+base_w_raw = 135;
 
 // base length of the whole bot
-base_d_raw = 140;
+base_d_raw = 135;
 
 // base height of the whole bot chassis
 base_h = 40;
@@ -107,7 +107,7 @@ weapon_axle_hole_d = 4.5;
 weapon_axle_hole_h = 0.5;
 
 // thickness of the protective walls around the spinner
-weapon_wall_thickness = 2;
+weapon_wall_thickness = 3;
 
 // gap between the spinner area and the protective walls (note: other interior stuff has a separate variable, interior_wall_gap)
 weapon_wall_gap = 2;
@@ -207,10 +207,13 @@ interior_show_weapon_walls = true;
 interior_weapon_wall_hole = true;
 
 // diameter of the hole
-interior_weapon_wall_hole_d = 5;
+interior_weapon_wall_hole_d = 6;
 
 // angle along the weapon wall to have the hole
 interior_weapon_wall_hole_a = 45;
+
+// width of the hole to make for the wires
+interior_weapon_wall_slot_w = 2;
 
 // padding to add to things on the interior that go up against the inner shelf
 interior_padding_against_shelf = 1;
@@ -304,7 +307,7 @@ whisker_rotation = 18;
 /* [TPU Shielding] */
 
 // gap between the tpu shielding and the outside of the chassis (eats into the tpu thickness)
-tpu_gap = -1; // .1
+tpu_gap = 0; // .1
 
 // starting thickness of the TPU shielding
 tpu_thickness_raw = 3;
