@@ -2,7 +2,7 @@
  *  Queen's Robotics Society
  *  Antweight Battlebot
  *
- *  Designed in 2024 by
+ *  Designed in 2024 - 2025 by
  *  - alex barnes (@atctwo)
  *
  *  This bot looks like the following things:
@@ -360,10 +360,10 @@ wheel_h = wheel_tread + wheel_tread_padding;
 /* [Visability] */
 
 // whether to show the main chassis
-show_main_chassis = true;
+show_main_chassis = false;
 
 // whether to show the top lid
-show_top_lid = true;
+show_top_lid = false;
 
 // whether to show the bottom lid
 show_bottom_lid = true;
@@ -372,25 +372,25 @@ show_bottom_lid = true;
 show_interior_shelf = true;
 
 // whether to show the tpu shielding
-show_tpu_shielding = true;
+show_tpu_shielding = false;
 
 // whether to show the wheels
-show_wheels = true;
+show_wheels = false;
 
 // whether to show the gearbox's axel
 show_gearbox_axel = false;
 
 // whether to show the selected motor / gearbox
-show_gearbox = true;
+show_gearbox = false;
 
 // whether to show the spinner's area
-show_weapon = true;
+show_weapon = false;
 
 // whether to show the spinner motor
-show_weapon_motor = true;
+show_weapon_motor = false;
 
 // whether to show the power switch
-show_switch = true;
+show_switch = false;
 
 // show the mock lipo battery
 show_lipo = false;
@@ -413,7 +413,7 @@ show_exploded = true;
 /* [Miscallaneous] */
 
 // curve resolution
-$fn = 100;
+$fn = 200;
 
 // lipo battery dimensions
 lipo_size = [12.5, 52.5, 17];
@@ -643,40 +643,40 @@ module chassis_shell() {
     color("#222222")
     difference() {
         union() {
-    difference() 
-    {
-        // outer shell
-        chassis_shape(base_w, weapon_w, body_w, plough_w, base_d, base_d, base_h);
+            difference() 
+            {
+                // outer shell
+                chassis_shape(base_w, weapon_w, body_w, plough_w, base_d, base_d, base_h);
 
-        // main big hole
-        interior_c = show_interior_colour ? "#00ced1" : undef; color(interior_c)
-        translate([0, 0, -0.5])
-        chassis_interior(base_w, weapon_w, body_w, plough_w, base_d, base_h + 1, interior_wall_thickness);
-
-        // hole for the spinner
-        if (chassis_show_weapon_hole) {
-            interior_spinner();
-        }
-    }
-
-    // shelf inside the chassis to support lids
-    if (show_interior_shelf) {
-        color("white")
-        translate([0, 0, interior_lid_thickness]) {
-            
-            // shelf
-            difference() {
-                chassis_interior(base_w, weapon_w, body_w, plough_w, base_d, base_h - (interior_lid_thickness * 2), interior_wall_thickness);
-                
+                // main big hole
+                interior_c = show_interior_colour ? "#00ced1" : undef; color(interior_c)
                 translate([0, 0, -0.5])
-                chassis_interior(base_w, weapon_w, body_w, plough_w, base_d, base_h - (interior_lid_thickness * 2)+1, interior_wall_thickness + interior_shelf_thickness);
-                
-                translate([0, 0, -interior_lid_thickness]) {
-                    // hole for the spinner
-                    if (chassis_show_weapon_hole) interior_spinner();
+                chassis_interior(base_w, weapon_w, body_w, plough_w, base_d, base_h + 1, interior_wall_thickness);
+
+                // hole for the spinner
+                if (chassis_show_weapon_hole) {
+                    interior_spinner();
                 }
             }
-        }
+
+            // shelf inside the chassis to support lids
+            if (show_interior_shelf) {
+                color("white")
+                translate([0, 0, interior_lid_thickness]) {
+                    
+                    // shelf
+                    difference() {
+                        chassis_interior(base_w, weapon_w, body_w, plough_w, base_d, base_h - (interior_lid_thickness * 2), interior_wall_thickness);
+                        
+                        translate([0, 0, -0.5])
+                        chassis_interior(base_w, weapon_w, body_w, plough_w, base_d, base_h - (interior_lid_thickness * 2)+1, interior_wall_thickness + interior_shelf_thickness);
+                        
+                        translate([0, 0, -interior_lid_thickness]) {
+                            // hole for the spinner
+                            if (chassis_show_weapon_hole) interior_spinner();
+                        }
+                    }
+                }
             }
         }
 
@@ -1021,9 +1021,9 @@ module interior_spinner() {
             color("Blue", 0.2)
             // translate([-weapon_offset.x/2, 0, weapon_thickness/2])
             translate([-weapon_offset.x/2, 0, st - (weapon_thickness/2) - off])
-        scale([
-            weapon_diameter + weapon_diameter_padding, 
-            weapon_diameter + weapon_diameter_padding, 
+            scale([
+                weapon_diameter + weapon_diameter_padding, 
+                weapon_diameter + weapon_diameter_padding, 
                 (weapon_thickness + weapon_thickness_padding)])
             sphere(d=1);
 
@@ -1034,7 +1034,7 @@ module interior_spinner() {
                 weapon_diameter + weapon_diameter_padding, 
                 weapon_diameter + weapon_diameter_padding, 
                 (weapon_thickness + weapon_thickness_padding)])
-        sphere(d=1);
+            sphere(d=1);
         }
     }
 }
@@ -1108,10 +1108,10 @@ module interior_weapon_walls() {
                         rotate([0, 0, interior_weapon_wall_hole_a])
                         translate([(weapon_diameter + weapon_diameter_padding + weapon_wall_gap)/2-interior_weapon_wall_hole_d, 0, 0])
                         rotate([0,90, 0]) {
-                        cylinder(d=interior_weapon_wall_hole_d, h=interior_weapon_wall_hole_d*2);
+                            cylinder(d=interior_weapon_wall_hole_d, h=interior_weapon_wall_hole_d*2);
                             translate([-(base_h - (interior_lid_thickness*2)), -(interior_weapon_wall_slot_w/2), 0])
                             cube([base_h - (interior_lid_thickness*2), interior_weapon_wall_slot_w, interior_weapon_wall_hole_d*2]);
-                    }
+                        }
                     }
 
                     // slot for the wires to go through
@@ -1439,21 +1439,21 @@ module tpu_shielding() {
 
         // switch hole
         if (tpu_show_switch_hole) {
-        translate([
-            interior_power_switch_x, 
-            0, 
-            (base_h/2)+interior_power_switch_z_offset
-        ]) {
+            translate([
+                interior_power_switch_x, 
+                0, 
+                (base_h/2)+interior_power_switch_z_offset
+            ]) {
 
-            // hole for the switch lever
-            translate([0, -1, 0])
-            rotate([90,0,0])
-            roundedCube([
-                interior_power_switch_hole.y,
-                interior_power_switch_hole.x,
-                tpu_thickness+10
-            ], 1, center=true, sidesonly=true);
-        
+                // hole for the switch lever
+                translate([0, -1, 0])
+                rotate([90,0,0])
+                roundedCube([
+                    interior_power_switch_hole.y,
+                    interior_power_switch_hole.x,
+                    tpu_thickness+10
+                ], 1, center=true, sidesonly=true);
+            
             }
         }
     }
