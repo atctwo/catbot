@@ -315,6 +315,9 @@ tpu_show_weapon_hole = true;
 // whether to show a gap in the shielding for the power switch
 tpu_show_switch_hole = true;
 
+// how much to curve the sides of the tpu shielding
+tpu_shielding_side_curving = 0.2;
+
 /* [Calculated Variables] */
 
 // what's the real value of the tpu thickness?  the tpu gap eats into the tpu thickness, so
@@ -1318,6 +1321,102 @@ module tpu_shielding() {
                 translate([(w_thickness - w_gap) / 2, (d_thickness - d_gap) / 2, -0.5])
                 chassis_shape(base_w, weapon_w, w_gap, plough_w, d_gap, base_d, base_h + 1, po=[0, tpu_gap, 0]);
 
+            }
+
+            // curved sides
+            union() {
+                // left side
+                translate([weapon_w, d_thickness, base_h/2]) {
+                    scale([1, tpu_shielding_side_curving, 1])
+                    difference() {
+                        union() {
+                            rotate([0, 90, 0])
+                            cylinder(h=w_thickness+plough_w, d=base_h);
+
+                            translate([w_thickness+plough_w, 0, 0]) {
+                                scale([base_h*tpu_shielding_side_curving, base_h, base_h])
+                                sphere(d=1);
+                            }
+                        };
+                        translate([-0.5, -base_h/2, -base_h/2])
+                        cube([w_thickness+plough_w+(base_h*tpu_shielding_side_curving)+1, base_h/2, base_h]);
+                    }
+
+                    translate([w_thickness+plough_w, 0, 0]) {
+                        difference() {
+                            scale([tpu_shielding_side_curving, 1, 1])
+                            rotate([90, 0, 0])
+                            cylinder(d=base_h, h=(d_thickness-base_d));
+
+                            translate([-tpu_shielding_side_curving*base_h, -(d_thickness-base_d)-0.5, -base_h/2])
+                            cube([tpu_shielding_side_curving*base_h, (d_thickness-base_d)+1, base_h]);
+                        }
+                    }
+                }
+
+                // right side
+                translate([weapon_w, 0, base_h/2]) {
+                    scale([1, tpu_shielding_side_curving, 1])
+                    difference() {
+                        union() {
+                            rotate([0, 90, 0])
+                            cylinder(h=w_thickness+plough_w, d=base_h);
+
+                            translate([w_thickness+plough_w, 0, 0]) {
+                                scale([base_h*tpu_shielding_side_curving, base_h, base_h])
+                                sphere(d=1);
+                            }
+                        }
+                        translate([-0.5, 0, -base_h/2])
+                        cube([w_thickness+plough_w+(base_h*tpu_shielding_side_curving)+1, base_h/2, base_h]);
+                    }
+
+                    translate([w_thickness+plough_w, (d_thickness-base_d), 0]) {
+                        difference() {
+                            scale([tpu_shielding_side_curving, 1, 1])
+                            rotate([90, 0, 0])
+                            cylinder(d=base_h, h=(d_thickness-base_d));
+
+                            translate([-tpu_shielding_side_curving*base_h, -(d_thickness-base_d), -base_h/2])
+                            cube([tpu_shielding_side_curving*base_h, (d_thickness-base_d)+1, base_h]);
+                        }
+                    }
+
+                }
+
+                // weapon side
+                translate([weapon_w, d_thickness/2, base_h/2]) {
+                    scale([weapon_w / (d_thickness/2), 1, 1])
+                    rotate([0, 0, 90])
+                    rotate_extrude(angle=180, convexity=10) 
+                    {
+                        translate([d_thickness/2, 0, 0]) // this determines arc radius
+                        rotate([0, 0, 180])
+                        scale([tpu_shielding_side_curving, 1, 1])
+                        difference() {
+                            circle(d=base_h);
+                            translate([0, -base_h/2, 0])
+                            square([base_h/2, base_h]);
+                        }
+                    }
+                }
+
+                // // plough side
+                // translate([weapon_w+w_thickness+plough_w+((base_h/2)), d_thickness/2, base_h/2]) {
+                //     scale([(plough_w+0.1)/(base_h*2), 1, 1])
+                //     rotate([0, 0, 90])
+                //     rotate_extrude(angle=180, convexity=10) 
+                //     {
+                //         translate([base_d/2, 0, 0]) // this determines arc radius
+                //         rotate([0, 0, 0])
+                //         scale([tpu_shielding_side_curving, 1, 1])
+                //         difference() {
+                //             circle(d=base_h);
+                //             translate([0, -base_h/2, 0])
+                //             square([base_h/2, base_h]);
+                //         }
+                //     }
+                // }
             }
 
         }
