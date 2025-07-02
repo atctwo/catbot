@@ -1075,6 +1075,8 @@ module weapon_motor_screw_holes() {
     }
 }
 
+// !weapon_motor_screw_holes();
+
 /*
  * Interior walls around the spinner area on the bottom lid
  */
@@ -1102,9 +1104,15 @@ module interior_weapon_walls() {
                     if (interior_weapon_wall_hole) {
                         rotate([0, 0, interior_weapon_wall_hole_a])
                         translate([(weapon_diameter + weapon_diameter_padding + weapon_wall_gap)/2-interior_weapon_wall_hole_d, 0, 0])
-                        rotate([0,90, 0])
+                        rotate([0,90, 0]) {
                         cylinder(d=interior_weapon_wall_hole_d, h=interior_weapon_wall_hole_d*2);
+                            translate([-(base_h - (interior_lid_thickness*2)), -(interior_weapon_wall_slot_w/2), 0])
+                            cube([base_h - (interior_lid_thickness*2), interior_weapon_wall_slot_w, interior_weapon_wall_hole_d*2]);
                     }
+                    }
+
+                    // slot for the wires to go through
+                    
                 }
             }
 
