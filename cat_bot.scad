@@ -92,7 +92,7 @@ weapon_mount_screw_cd1 = 2.5;
 weapon_mount_screw_cd2 = 3.8;
 
 // size of the countersunk head of weapon screw holes
-weapon_mount_screw_ch = 1.4;
+weapon_mount_screw_ch = 2;
 
 // positions of the screws holes for the weapon (expressed as distances from the motor axle)
 weapon_mount_screws = [
@@ -1059,7 +1059,7 @@ module weapon_motor_screw_holes() {
             translate([0, 0, weapon_mount_screw_ch-0.5])
             cylinder(d=weapon_mount_screw_cd1, h=interior_lid_thickness-weapon_mount_screw_ch+1);
 
-            // countersunk head
+            // bolt head
             cylinder(
                 d1=weapon_mount_screw_cd2,
                 d2=weapon_mount_screw_cd1,
