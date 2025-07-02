@@ -312,6 +312,9 @@ tpu_thickness_raw = 3;
 // whether to show a gap in the shielding for the spinner
 tpu_show_weapon_hole = true;
 
+// whether to show a gap in the shielding for the power switch
+tpu_show_switch_hole = true;
+
 /* [Calculated Variables] */
 
 // what's the real value of the tpu thickness?  the tpu gap eats into the tpu thickness, so
@@ -1325,6 +1328,7 @@ module tpu_shielding() {
         }
 
         // switch hole
+        if (tpu_show_switch_hole) {
         translate([
             interior_power_switch_x, 
             0, 
@@ -1340,6 +1344,7 @@ module tpu_shielding() {
                 tpu_thickness+10
             ], 1, center=true, sidesonly=true);
         
+            }
         }
     }
 
