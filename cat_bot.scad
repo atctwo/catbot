@@ -324,6 +324,9 @@ tpu_show_switch_hole = true;
 // how much to curve the sides of the tpu shielding
 tpu_shielding_side_curving = 0.2;
 
+// width of the curved bits at the back, because idk how to calculate the length of an arc :/
+back_part_width = 4;
+
 /* [Calculated Variables] */
 
 // what's the real value of the tpu thickness?  the tpu gap eats into the tpu thickness, so
@@ -363,13 +366,13 @@ wheel_h = wheel_tread + wheel_tread_padding;
 /* [Visability] */
 
 // whether to show the main chassis
-show_main_chassis = false;
+show_main_chassis = true;
 
 // whether to show the top lid
 show_top_lid = false;
 
 // whether to show the bottom lid
-show_bottom_lid = true;
+show_bottom_lid = false;
 
 // whether to show the shelf on the inside of the interior (depends on show_main_chassis)
 show_interior_shelf = true;
@@ -384,7 +387,7 @@ show_wheels = false;
 show_gearbox_axel = false;
 
 // whether to show the selected motor / gearbox
-show_gearbox = true;
+show_gearbox = false;
 
 // whether to show the spinner's area
 show_weapon = false;
@@ -664,7 +667,7 @@ module chassis_curved_sides(base_w, weapon_w, body_w, plough_w, base_d, base_d, 
                 difference() {
                     scale([tpu_shielding_side_curving, 1, 1])
                     rotate([90, 0, 0])
-                    cylinder(d=base_h, h=(d_thickness-base_d));
+                    cylinder(d=base_h, h=back_part_width);
 
                     translate([-tpu_shielding_side_curving*base_h, -(d_thickness-base_d)-0.5, -base_h/2])
                     cube([tpu_shielding_side_curving*base_h, (d_thickness-base_d)+1, base_h]);
@@ -689,11 +692,11 @@ module chassis_curved_sides(base_w, weapon_w, body_w, plough_w, base_d, base_d, 
                 cube([w_thickness+plough_w+(base_h*tpu_shielding_side_curving)+1, base_h/2, base_h]);
             }
 
-            #translate([w_thickness+plough_w, (d_thickness-base_d), 0]) {
+            translate([w_thickness+plough_w, back_part_width, 0]) {
                 difference() {
                     scale([tpu_shielding_side_curving, 1, 1])
                     rotate([90, 0, 0])
-                    cylinder(d=base_h, h=(d_thickness-base_d));
+                    cylinder(d=base_h, h=back_part_width);
 
                     translate([-tpu_shielding_side_curving*base_h, -(d_thickness-base_d), -base_h/2])
                     cube([tpu_shielding_side_curving*base_h, (d_thickness-base_d)+1, base_h]);
