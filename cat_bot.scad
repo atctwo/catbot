@@ -117,6 +117,9 @@ weapon_wall_gap = 2;
 // whether to make a big hole for the spinner to extend out of
 chassis_show_weapon_hole = true;
 
+// whether to make the sides of the chassis curved
+chasss_curved_walls = true;
+
 /* [Interior and Lid Dimensions] */
 
 // thickness of the shell's walls
@@ -360,7 +363,7 @@ wheel_h = wheel_tread + wheel_tread_padding;
 /* [Visability] */
 
 // whether to show the main chassis
-show_main_chassis = false;
+show_main_chassis = true;
 
 // whether to show the top lid
 show_top_lid = false;
@@ -627,9 +630,102 @@ module chassis_interior(w, ww, bw, pw, d, h, gap) {
 
 }
 
+
+
+
+module chassis_curved_sides(base_w, weapon_w, body_w, plough_w, base_d, base_d, base_h) {
+
+    w_hole      = base_w;
+    d_hole      = base_d;
+
+    w_thickness = body_w;
+    d_thickness = base_d;
+
+    // curved sides
+    union() {
+        // left side
+        translate([weapon_w, d_thickness, base_h/2]) {
+            scale([1, tpu_shielding_side_curving, 1])
+            difference() {
+                union() {
+                    rotate([0, 90, 0])
+                    cylinder(h=w_thickness+plough_w, d=base_h);
+
+                    translate([w_thickness+plough_w, 0, 0]) {
+                        scale([base_h*tpu_shielding_side_curving, base_h, base_h])
+                        sphere(d=1);
+                    }
+                };
+                translate([-0.5, -base_h/2, -base_h/2])
+                cube([w_thickness+plough_w+(base_h*tpu_shielding_side_curving)+1, base_h/2, base_h]);
+            }
+
+            translate([w_thickness+plough_w, 0, 0]) {
+                difference() {
+                    scale([tpu_shielding_side_curving, 1, 1])
+                    rotate([90, 0, 0])
+                    cylinder(d=base_h, h=(d_thickness-base_d));
+
+                    translate([-tpu_shielding_side_curving*base_h, -(d_thickness-base_d)-0.5, -base_h/2])
+                    cube([tpu_shielding_side_curving*base_h, (d_thickness-base_d)+1, base_h]);
+                }
+            }
+        }
+
+        // right side
+        translate([weapon_w, 0, base_h/2]) {
+            scale([1, tpu_shielding_side_curving, 1])
+            difference() {
+                union() {
+                    rotate([0, 90, 0])
+                    cylinder(h=w_thickness+plough_w, d=base_h);
+
+                    translate([w_thickness+plough_w, 0, 0]) {
+                        scale([base_h*tpu_shielding_side_curving, base_h, base_h])
+                        sphere(d=1);
+                    }
+                }
+                translate([-0.5, 0, -base_h/2])
+                cube([w_thickness+plough_w+(base_h*tpu_shielding_side_curving)+1, base_h/2, base_h]);
+            }
+
+            #translate([w_thickness+plough_w, (d_thickness-base_d), 0]) {
+                difference() {
+                    scale([tpu_shielding_side_curving, 1, 1])
+                    rotate([90, 0, 0])
+                    cylinder(d=base_h, h=(d_thickness-base_d));
+
+                    translate([-tpu_shielding_side_curving*base_h, -(d_thickness-base_d), -base_h/2])
+                    cube([tpu_shielding_side_curving*base_h, (d_thickness-base_d)+1, base_h]);
+                }
+            }
+
+        }
+
+        // weapon side
+        translate([weapon_w, d_thickness/2, base_h/2]) {
+            scale([weapon_w / (d_thickness/2), 1, 1])
+            rotate([0, 0, 90])
+            rotate_extrude(angle=180, convexity=10) 
+            {
+                translate([d_thickness/2, 0, 0]) // this determines arc radius
+                rotate([0, 0, 180])
+                scale([tpu_shielding_side_curving, 1, 1])
+                difference() {
+                    circle(d=base_h);
+                    translate([0, -base_h/2, 0])
+                    square([base_h/2, base_h]);
+                }
+            }
+        }
+    }
+
+}
+
+
 ///////////////////////////////////////////
 //
-//    Hollowing out chassis
+//    Hollowing out chassis + round sides
 //
 ///////////////////////////////////////////
 
@@ -645,8 +741,14 @@ module chassis_shell() {
         union() {
             difference() 
             {
-                // outer shell
-                chassis_shape(base_w, weapon_w, body_w, plough_w, base_d, base_d, base_h);
+                union() {
+                    // outer shell
+                    chassis_shape(base_w, weapon_w, body_w, plough_w, base_d, base_d, base_h);
+
+                    // curved sides
+                    if (chasss_curved_walls)
+                    chassis_curved_sides(base_w, weapon_w, body_w, plough_w, base_d, base_d, base_h);
+                }
 
                 // main big hole
                 interior_c = show_interior_colour ? "#00ced1" : undef; color(interior_c)
@@ -683,7 +785,7 @@ module chassis_shell() {
         // padding around the motor
         color("Red")
         translate(weapon_offset)
-        translate([0, base_d/2, interior_lid_thickness-0.5]) 
+        translate([0, base_d/2, -0.5]) 
         cylinder(d=weapon_motor_diameter+weapon_motor_padding, h=weapon_z+1);
 
         // switch holes
@@ -698,7 +800,7 @@ module chassis_shell() {
             roundedCube([
                 interior_power_switch_hole.y,
                 interior_power_switch_hole.x,
-                interior_wall_thickness+interior_shelf_thickness+1
+                interior_wall_thickness+interior_shelf_thickness+1+(tpu_shielding_side_curving*base_h)
             ], 1, center=true, sidesonly=true);
 
             // mounting holes
