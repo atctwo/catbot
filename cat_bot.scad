@@ -422,10 +422,10 @@ show_exploded = true;
 $fn = 200;
 
 // lipo battery dimensions
-lipo_size = [12.5, 52.5, 17];
+lipo_size = [17, 52.5, 12.5];
 
 // lipo offset
-lipo_offset = [95, 40, 15];
+lipo_offset = [53, 40, 13.5];
 
 ///////////////////////////////////////////
 //
