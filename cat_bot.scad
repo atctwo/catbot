@@ -231,7 +231,7 @@ interior_power_switch_z_offset = 0;
 interior_power_switch_hole = [8, 4.5];
 
 // diameter of the holes to make for the switch mounts
-interior_power_switch_mount_d = 1.75;
+interior_power_switch_mount_d = 3.5;
 
 // depth of the holes to make for the switch mounts
 interior_power_switch_mount_h = 4;
@@ -809,11 +809,11 @@ module chassis_shell() {
             // mounting holes
             translate([0, (interior_wall_thickness+interior_shelf_thickness)+1.5, 7.5])
             rotate([90, 0, 0])
-            cylinder(d=interior_power_switch_mount_h, h=interior_power_switch_mount_d+1);
+            cylinder(d=interior_power_switch_mount_d, h=interior_power_switch_mount_h+1);
 
             translate([0, (interior_wall_thickness+interior_shelf_thickness)+1.5, -7.5])
             rotate([90, 0, 0])
-            cylinder(d=interior_power_switch_mount_h, h=interior_power_switch_mount_d+1);
+            cylinder(d=interior_power_switch_mount_d, h=interior_power_switch_mount_h+1);
 
         }
     }
