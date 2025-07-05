@@ -807,11 +807,11 @@ module chassis_shell() {
             ], 1, center=true, sidesonly=true);
 
             // mounting holes
-            translate([0, (interior_wall_thickness+interior_shelf_thickness)+0.5, 7])
+            translate([0, (interior_wall_thickness+interior_shelf_thickness)+1.5, 7.5])
             rotate([90, 0, 0])
             cylinder(d=interior_power_switch_mount_h, h=interior_power_switch_mount_d+1);
 
-            translate([0, (interior_wall_thickness+interior_shelf_thickness)+0.5, -7])
+            translate([0, (interior_wall_thickness+interior_shelf_thickness)+1.5, -7.5])
             rotate([90, 0, 0])
             cylinder(d=interior_power_switch_mount_h, h=interior_power_switch_mount_d+1);
 
