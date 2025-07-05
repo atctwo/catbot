@@ -1615,5 +1615,5 @@ if (show_gearbox)       explode(35) {
     }
 }
 
-if (show_lipo)          explode(30) interior_lipo();
+if (show_lipo)          explode(20) interior_lipo();
 if (show_switch)        explode(30) interior_switch();
