@@ -1576,15 +1576,15 @@ module tpu_shielding() {
  * for form the final bot chassis.
  */
 
-if (show_main_chassis)  explode(180) chassis_shell();
-if (show_top_lid)       explode(210) lid_top();
+if (show_main_chassis)  explode(110) chassis_shell();
+if (show_top_lid)       explode(140) lid_top();
 if (show_bottom_lid)    explode(0)   lid_bottom();
 if (show_tpu_shielding) explode(120) tpu_shielding();
 
-if (show_wheels)        explode(35) interior_wheels();
+if (show_wheels)        explode(40) interior_wheels();
 if (show_gearbox_axel)  explode(60) interior_gearbox_axel();
-if (show_weapon)        explode(60) interior_spinner();
-if (show_weapon_motor)  explode(30) interior_motor();
+if (show_weapon)        explode(45) interior_spinner();
+if (show_weapon_motor)  explode(25) interior_motor();
 
 if (show_gearbox)       explode(35) {
     
