@@ -322,7 +322,7 @@ tpu_show_weapon_hole = true;
 tpu_show_switch_hole = true;
 
 // how much to curve the sides of the tpu shielding
-tpu_shielding_side_curving = 0.2;
+tpu_shielding_side_curving = 0.25;
 
 // width of the curved bits at the back, because idk how to calculate the length of an arc :/
 back_part_width = 4;
