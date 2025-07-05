@@ -29,7 +29,7 @@ base_w_raw = 135;
 base_d_raw = 135;
 
 // base height of the whole bot chassis
-base_h = 40;
+base_h = 38;
 
 /* [Plough Dimensions] */
 
