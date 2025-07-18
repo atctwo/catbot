@@ -126,7 +126,7 @@ chasss_curved_walls = true;
 interior_wall_thickness = 2.5;
 
 // thickness of the lids
-interior_lid_thickness = 3;
+interior_lid_thickness = 3.5;
 
 // gap between outer edge of lids and inner edge of interior
 interior_lid_gap = 0.5;
