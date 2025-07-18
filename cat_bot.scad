@@ -218,6 +218,36 @@ interior_weapon_wall_hole_a = 45;
 // width of the hole to make for the wires
 interior_weapon_wall_slot_w = 2;
 
+// whether to show weapon stabiliser mounts
+interior_show_weapon_stabilisers = true;
+
+// diameter of the weapon stabiliser mounts (should be greater than weapon_stabiliser_insert_d by at least a bit)
+weapon_stabiliser_mount_d = 7;
+
+// height of the weapon stabiliser mounts (should be greater than weapon_stabiliser_insert_h by at least a bit)
+weapon_stabiliser_mount_h = 6;
+
+// position of the brass insert mounts for the weapon stabilisers; make sure the generated posts are physically connected to the main chassis
+weapon_stabiliser_mount_offset = [-7, 15];
+
+// the weapon stabiliser mounts are actually made by taking the hull of two cylinders.  if one of the cylinders is placed inside the chassis walls, then the overall shape has a stronger connection to the chassis.  use this offset to determine the position of the "joining" cylinder
+weapon_stabiliser_mount_hull_offset = [-3, 0];
+
+// diameter of the brass insert holes for the weapon stabilisers
+weapon_stabiliser_insert_d = 3;
+
+// depth of the brass insert holes for the weapon stabilisers
+weapon_stabiliser_insert_h = 5;
+
+// smaller diameter for the weapon stabiliser mounting holes on the bottom lid
+weapon_stabiliser_screw_d1 = 2.5;
+
+// larger (countersink) diameter for the weapon stabiliser mounting holes on the bottom lid
+weapon_stabiliser_screw_d2 = 3.8;
+
+// height of the countersunk head for the weapon stabiliser mounting holes on the bottom lid
+weapon_stabiliser_screw_ch = 2;
+
 // padding to add to things on the interior that go up against the inner shelf
 interior_padding_against_shelf = 1;
 
@@ -783,7 +813,13 @@ module chassis_shell() {
                     }
                 }
             }
+
+            // weapon stabalisers
+            if (interior_show_weapon_stabilisers) interior_weapon_stabailisers();
         }
+
+        // mount holes for weapon stabalisers
+        if (interior_show_weapon_stabilisers) interior_weapon_stabailisers_holes_insert();
 
         // padding around the motor
         color("Red")
@@ -1229,6 +1265,82 @@ module interior_weapon_walls() {
         }
 }
 
+module interior_weapon_stabailisers() {
+
+    translate(weapon_offset)
+    translate([
+        weapon_stabiliser_mount_offset.x, 
+        (base_d/2)-weapon_stabiliser_mount_offset.y, 
+        interior_lid_thickness
+    ]) {
+        hull() {
+            cylinder(d=weapon_stabiliser_mount_d, h=weapon_stabiliser_mount_h);
+            translate([weapon_stabiliser_mount_hull_offset.x, -weapon_stabiliser_mount_hull_offset.y])
+            cylinder(d=weapon_stabiliser_mount_d, h=weapon_stabiliser_mount_h);
+        }
+    }
+
+    translate(weapon_offset)
+    translate([
+        weapon_stabiliser_mount_offset.x, 
+        (base_d/2)+weapon_stabiliser_mount_offset.y, 
+        interior_lid_thickness
+    ]) {
+        hull() {
+            cylinder(d=weapon_stabiliser_mount_d, h=weapon_stabiliser_mount_h);
+            translate([weapon_stabiliser_mount_hull_offset.x, weapon_stabiliser_mount_hull_offset.y])
+            cylinder(d=weapon_stabiliser_mount_d, h=weapon_stabiliser_mount_h);
+        }
+    }
+
+}
+
+module interior_weapon_stabailisers_holes_insert() {
+
+    translate(weapon_offset)
+    translate([
+        weapon_stabiliser_mount_offset.x, 
+        (base_d/2)-weapon_stabiliser_mount_offset.y, 
+        interior_lid_thickness-0.5
+    ]) 
+    cylinder(d=weapon_stabiliser_insert_d, h=weapon_stabiliser_insert_h+1);
+
+    translate(weapon_offset)
+    translate([
+        weapon_stabiliser_mount_offset.x, 
+        (base_d/2)+weapon_stabiliser_mount_offset.y, 
+        interior_lid_thickness-0.5
+    ]) 
+    cylinder(d=weapon_stabiliser_insert_d, h=weapon_stabiliser_insert_h+1);
+    
+}
+
+module interior_weapon_stabailisers_holes_screw() {
+
+    translate(weapon_offset)
+    translate([
+        weapon_stabiliser_mount_offset.x, 
+        (base_d/2)-weapon_stabiliser_mount_offset.y, 
+        interior_lid_thickness-0.5
+    ]) {
+        cylinder(d2=weapon_stabiliser_screw_d1, d1=weapon_stabiliser_screw_d2, h=weapon_stabiliser_screw_ch);
+        translate([0, 0, weapon_stabiliser_screw_ch-0.1])
+        cylinder(d=weapon_stabiliser_screw_d1, h=interior_lid_thickness);
+    }
+
+    translate(weapon_offset)
+    translate([
+        weapon_stabiliser_mount_offset.x, 
+        (base_d/2)+weapon_stabiliser_mount_offset.y, 
+        interior_lid_thickness-0.5
+    ]) { 
+        cylinder(d2=weapon_stabiliser_screw_d1, d1=weapon_stabiliser_screw_d2, h=weapon_stabiliser_screw_ch);
+        translate([0, 0, weapon_stabiliser_screw_ch-0.1])
+        cylinder(d=weapon_stabiliser_screw_d1, h=interior_lid_thickness);
+    }
+    
+}
+
 /*
  * Mock LiPo battery
  */
@@ -1358,6 +1470,10 @@ module lid_bottom() {
             translate(weapon_offset)
             translate([0, base_d/2, 0]) 
             weapon_motor_screw_holes();
+
+            // weapon stabiliser screw holes
+            translate([0, 0, -interior_lid_thickness])
+            if (interior_show_weapon_stabilisers) interior_weapon_stabailisers_holes_screw();
 
         }
 
