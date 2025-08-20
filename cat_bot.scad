@@ -399,10 +399,10 @@ wheel_h = wheel_tread + wheel_tread_padding;
 show_main_chassis = true;
 
 // whether to show the top lid
-show_top_lid = false;
+show_top_lid = true;
 
 // whether to show the bottom lid
-show_bottom_lid = false;
+show_bottom_lid = true;
 
 // whether to show the shelf on the inside of the interior (depends on show_main_chassis)
 show_interior_shelf = true;
