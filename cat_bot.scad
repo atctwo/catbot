@@ -68,7 +68,7 @@ weapon_diameter = 60.33;
 weapon_thickness = 3;
 
 // extra diameter to add to the spinner to make the hole wider
-weapon_diameter_padding = 5;
+weapon_diameter_padding = 10;
 
 // extra thickness to add to the spinner to make the hole taller
 weapon_thickness_padding = 10;
@@ -399,7 +399,7 @@ wheel_h = wheel_tread + wheel_tread_padding;
 show_main_chassis = true;
 
 // whether to show the top lid
-show_top_lid = false;
+show_top_lid = true;
 
 // whether to show the bottom lid
 show_bottom_lid = true;
@@ -417,10 +417,10 @@ show_wheels = false;
 show_gearbox_axel = false;
 
 // whether to show the selected motor / gearbox
-show_gearbox = true;
+show_gearbox = false;
 
 // whether to show the spinner's area
-show_weapon = false;
+show_weapon = true;
 
 // whether to show the spinner motor
 show_weapon_motor = false;
