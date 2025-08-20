@@ -144,7 +144,7 @@ interior_lid_mounting_d = 10;
 interior_lid_mounting_r = 2;
 
 // diameter of the mounting hole
-interior_lid_mounting_hole_d = 4;  // M3 brass insert
+interior_lid_mounting_hole_d = 3.5;  // M3 brass insert
 
 // screw diameters have 0.5mm added for normal padding, and an extra 0.4mm for my shrinky filament
 
@@ -399,7 +399,7 @@ wheel_h = wheel_tread + wheel_tread_padding;
 show_main_chassis = true;
 
 // whether to show the top lid
-show_top_lid = true;
+show_top_lid = false;
 
 // whether to show the bottom lid
 show_bottom_lid = true;
