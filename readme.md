@@ -21,6 +21,9 @@ This bot was originally designed with two configurations: Little Cat and Big Cat
 # Building
 So, you want to build your own Cat Bot?  This section will detail the steps required to do that.  First, take a look at the [bill of materials](./bom.md).
 
+> [!NOTE]
+> When printing parts for the bot, pre-rendered renders of each part are provided in the [`renders`](./renders/) directory.  But if you're making changes to the OpenSCAD source, make sure to clone this repo's submodules (specifically [MCAD](https://github.com/openscad/MCAD), which this project depends on).  You can do this by running `git submodule update --init --recursive`.
+
 The base of the bot is **the bottom lid** - this is the part onto which all the motors and electronics are mounted.  In between the wheel walls, there's a big block with eight holes in it - these are for M3 brass inserts.  Both motors are held in place by a [micro metal bracket](./renders/micro_metal_bracket.stl), which screw into place using four pan-head M3 screws each.  
 
 The weapon motor mounts onto the front of the bottom lid.  There are four countersunk holes for M2 screws to go through the lid into the motor.  The wires of the motor can be kept out of the way by slotting them into the slot in the protective wall around the spinner area.  Don't attach the weapon blade yet, since it's easier to install once the main chassis is installed.
@@ -46,14 +49,11 @@ Finally, the top lid can be attached to the main chassis in the same way the bot
 
 Optionally, the TPU shielding can be installed by simply sliding it over the main chassis.  It should friction fit over the main chassis.  I usually start by sliding the hole in the front of the shielding over the protruding weapon, then dragging the shielding down and over the bot.
 
-> [!NOTE]
-> When printing parts for the bot, pre-rendered renders of each part are provided in the [`renders`](./renders/) directory.  But if you're making changes to the OpenSCAD source, make sure to clone this repo's submodules (specifically [MCAD](https://github.com/openscad/MCAD), which this project depends on).  You can do this by running `git submodule update --init --recursive`.
-
 # Repo Structure
 - [`exploded_view/`](./exploded_view/) - location to store images and render videos of an exploded view animation
 - [`imports/`](./imports/) - external files imported by `cat_bot.scad` (eg: an SVG of the QRS logo)
 - [`MCAD/`](./MCAD/) - submodule to MCAD, an OpenSCAD library dependency
-- [`renders/](./renders/) - exported STL versions of each part of each version of each configuration
+- [`renders/`](./renders/) - exported STL versions of each part of each version of each configuration
 - [`bom.md`](./bom.md) - bill of materials for each config
 - [`cat_bot.json`](./cat_bot.json) - OpenSCAD configuration profiles
 - [`cat_bot.scad`](./cat_bot.scad) - the main OpenSCAD source code file
