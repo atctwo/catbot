@@ -1091,42 +1091,42 @@ module interior_gearbox_micro_mounting() {
             */
 
             // mounting hole L1
-            #translate([-screw_hole_offset.x, screw_hole_offset.y])
+            translate([-screw_hole_offset.x, screw_hole_offset.y])
             translate([(box_base_w/2)-(bracket_d/2), 4.8+bracket_y_offset, box_base_h - screw_hole_h])
             cylinder(d=screw_hole_d, h=screw_hole_h+1);
 
             // mounting hole L2
-            #translate([-screw_hole_offset.x, screw_hole_offset.y])
+            translate([-screw_hole_offset.x, screw_hole_offset.y])
             translate([(box_base_w/2)-(bracket_d/2), 19.2+bracket_y_offset, box_base_h - screw_hole_h])
             cylinder(d=screw_hole_d, h=screw_hole_h+1);
 
             // mounting hole L3
-            #translate([screw_hole_offset.x, screw_hole_offset.y])
+            translate([screw_hole_offset.x, screw_hole_offset.y])
             translate([(box_base_w/2)+(bracket_d/2), 4.8+bracket_y_offset, box_base_h - screw_hole_h])
             cylinder(d=screw_hole_d, h=screw_hole_h+1);
 
             // mounting hole L4
-            #translate([screw_hole_offset.x, screw_hole_offset.y])
+            translate([screw_hole_offset.x, screw_hole_offset.y])
             translate([(box_base_w/2)+(bracket_d/2), 19.2+bracket_y_offset, box_base_h - screw_hole_h])
             cylinder(d=screw_hole_d, h=screw_hole_h+1);
 
             // mounting hole R1
-            #translate([-screw_hole_offset.x, screw_hole_offset.y])
+            translate([-screw_hole_offset.x, screw_hole_offset.y])
             translate([(box_base_w/2)-(bracket_d/2), (box_base_d-bracket_d) + 4.8 - bracket_y_offset, box_base_h - screw_hole_h])
             cylinder(d=screw_hole_d, h=screw_hole_h+1);
 
             // mounting hole R2
-            #translate([-screw_hole_offset.x, screw_hole_offset.y])
+            translate([-screw_hole_offset.x, screw_hole_offset.y])
             translate([(box_base_w/2)-(bracket_d/2), (box_base_d-bracket_d) + 19.2 - bracket_y_offset, box_base_h - screw_hole_h])
             cylinder(d=screw_hole_d, h=screw_hole_h+1);
 
             // mounting hole R3
-            #translate([screw_hole_offset.x, screw_hole_offset.y])
+            translate([screw_hole_offset.x, screw_hole_offset.y])
             translate([(box_base_w/2)+(bracket_d/2), (box_base_d-bracket_d) + 4.8 - bracket_y_offset, box_base_h - screw_hole_h])
             cylinder(d=screw_hole_d, h=screw_hole_h+1);
 
             // mounting hole R4
-            #translate([screw_hole_offset.x, screw_hole_offset.y])
+            translate([screw_hole_offset.x, screw_hole_offset.y])
             translate([(box_base_w/2)+(bracket_d/2), (box_base_d-bracket_d) + 19.2 - bracket_y_offset, box_base_h - screw_hole_h])
             cylinder(d=screw_hole_d, h=screw_hole_h+1);
 
