@@ -11,9 +11,10 @@ This page lists all the parts needed to build a Cat Bot.  This is a list of all 
 | Micro Metal Gearbox Motor   | 2   | 298:1 ratio is recommended                 |
 | Micro Metal Bracket         | 2   | Separate model in this repo ([source](micro_metal_bracket.scad), [STL](renders/wheels/micro_metal_bracket.stl))|
 | Micro Metal Shim            | 2   | Little shims made by [Pimoroni](https://shop.pimoroni.com/products/motor-shim-pack-of-5?variant=24169581255) so you don't have to solder directly to the motors |
-| Cat Wheel Hub               | 2   | Main hub of the wheels, printed in TPU ([source](cat_wheel.scad), [STL](./renders/wheels/cat_wheel_v2_hub_36mm.stl)) |
-| Cat Wheel Axel              | 2   | 3mm shaft compatible insert, inserted into hub ([source](cat_wheel.scad), [STL](./renders/wheels/cat_wheel_v2_insert.stl)) |
-| Grippy stuff                |     | Rubbery grippy stuff used as treads for the wheels, kinda like [this](https://www.amazon.co.uk/LR-Supplies-Dashboard-Flexible-Rubber/dp/B08HM9TX5Y) |
+| Wheels                      | 2   | The bot is designed to use any 42mm diameter, 3mm shaft wheels.  However, this cat has custom wheels if you want to make them! |
+| &nbsp;&nbsp;&nbsp;&nbsp;Cat Wheel Hub | 2   | Main hub of the wheels, printed in TPU ([source](cat_wheel.scad), [STL](./renders/wheels/cat_wheel_v2_hub_36mm.stl)) |
+| &nbsp;&nbsp;&nbsp;&nbsp;Cat Wheel Axel | 2   | 3mm shaft compatible insert, inserted into hub ([source](cat_wheel.scad), [STL](./renders/wheels/cat_wheel_v2_insert.stl)) |
+| &nbsp;&nbsp;&nbsp;&nbsp;Grippy stuff |     | Rubbery grippy stuff used as treads for the wheels, kinda like [this](https://www.amazon.co.uk/LR-Supplies-Dashboard-Flexible-Rubber/dp/B08HM9TX5Y) |
 | **Weapon**                  |     |                                            |
 | 60mm spinning blade         | 1   | Currently using [this one](https://www.ull-robotics.com/shop/p/60mm-dia-disc) from ULL Robotics<br>Previously used [this one](https://monsoonrobotics.co.uk/collections/bars-and-discs) from Monsoon Robotics|
 | Brushless Motor             | 1   | I'm currently using a BE1806 ([eg: this one from Bristol Bot Builders](https://shop.bristolbotbuilders.com/product/brushlessmotor/))|
@@ -29,7 +30,9 @@ This page lists all the parts needed to build a Cat Bot.  This is a list of all 
 | M2x6 (countersunk)          | 4   | Mounting screws for the weapon motor       |
 | M2x8 (countersunk)          | 2   | Fixing the edge of the bottom lid to the chassis |
 | M2x8 (pan)                  | 4   | Screws to mount the weapon onto the motor (use wider / thicker heads to avoid the force of the weapon bending them)  |
+| M2.5x4                      | 2   | Mounting the power switch to the chassis   |
 | **Inserts**                 |     |                                            |
 | M3x4                        | 8   | Mounts for motor brackets                  |
 | M3x4 again                  | 8   | Mounts for lid                             |
 | M2x3                        | 2   | Extra support mounts for the bottom lid around the motor |
+| M2.5x3                      | 2   | Mounts for the power switch                |
