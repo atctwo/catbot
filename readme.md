@@ -26,12 +26,12 @@ A guide for building your own kitty are provided in [`docs/building.md`](./docs/
 - [`imports/`](./imports/) - external files imported by `cat_bot.scad` (eg: an SVG of the QRS logo)
 - [`MCAD/`](./MCAD/) - submodule to [MCAD](https://github.com/openscad/MCAD), an OpenSCAD library dependency
 - [`renders/`](./renders/) - exported STL versions of each part of each version of each configuration
-- [`docs/](./docs/) - documentation for the bot
-  - [`building.md](./docs/building.md) - cat bot build guide
+- [`docs/`](./docs/) - documentation for the bot
+  - [`building.md`](./docs/building.md) - cat bot build guide
   - [`bom.md`](./docs/bom.md) - bill of materials for each config
 - [`src/`](./src/) - directory containing the OpenSCAD source code
   - [`cat_bot.scad`](./src/cat_bot.scad) - the main OpenSCAD source code file
-  - [`cat_wheel.scad](./src/cat_wheel.scad) - source code for the custom wheels the bot uses
+  - [`cat_wheel.scad`](./src/cat_wheel.scad) - source code for the custom wheels the bot uses
   - [`micro_metal_bracket.scad`](./src/micro_metal_bracket.scad) - a little bracket for the micro metal motors used by Little Cat
 - [`readme.md`](./readme.md) - this readme!
 
