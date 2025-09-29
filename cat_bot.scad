@@ -281,7 +281,7 @@ wheel_diameter = 42; // .1
 wheel_diameter_padding = 5; // .1
 
 // distance of the centres of the two wheels from the centre of the robot
-wheel_separation = 96; // .1
+wheel_separation = 90; // .1
 
 // vector by which to offset the wheels from the centre of the bot
 wheel_offset = [15, 0, 0]; //.1
