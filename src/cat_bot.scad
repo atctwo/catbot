@@ -568,7 +568,7 @@ module chassis_shape(w, ww, bw, pw, d, pd, h, po=[0,0,0]) {
 //     iw = 307; id = 250; ix = 0.3; iy = 0.3;
 //     translate([(iw*ix)+((base_w-(iw*ix))/3), (base_d - (id*iy))/2, 0])
 //     scale([ix, iy, 0.05]) rotate([0, 0, 90])
-//     surface("./imports/qrs_icon_heightmap_100.png", invert=false);
+//     surface("./../imports/qrs_icon_heightmap_100.png", invert=false);
 // }
 
 /*
@@ -578,7 +578,7 @@ module qrs_logo() {
     sizes = qrs_logo_size();
     iw = sizes[0]; id = sizes[1];
     translate([iw/2, -id/2, 0]) rotate([0, 0, 90])
-    import("imports/qrs_icon.svg", dpi=qrs_logo_dpi);
+    import("../imports/qrs_icon.svg", dpi=qrs_logo_dpi);
 }
 
 /*
@@ -989,7 +989,7 @@ module interior_gearbox_axel() {
 module interior_gearbox_double() {
     rotate([180, 0, 90])
     translate([24, -8, -8])  // set origin to middle of gearbox
-    import("./imports/tamiya_double_gearbox.stl");
+    import("./../imports/tamiya_double_gearbox.stl");
 }
 
 /*
