@@ -1,5 +1,5 @@
 /*
- * Cat Bot Wheels
+ * Cat Bot Wheels v3.0
  * made by alex (atctwo) in july - oct 2025
  * no idea how well these will work so i guess we'll see!
  * please print in something squishy and grippy (eg: TPU)
@@ -11,12 +11,12 @@ wheel_h = 18;                       // wheel height (tread thicknes)
 hub_ot = 4;                         // thickness of the outer section of the hub
 hub_id = 16;                        // diameter of the inner hub
 hub_m = 0.1;                        // space between the hub and the tyre
-tyre_t = 3;
+tyre_t = 4;                         // thickness of the outer tyre
 
 n_spokes = 5;                       // number of spokes
 spoke_t = 4;                        // thickness of each spoke
 spoke_h = 12;                       // height of each spoke
-shaft_d = 3.1;                      // shaft diameter
+shaft_d = 3.6;                      // shaft diameter
 shaft_flat_offset = 0.75;           // how much of the shaft should be curved (ie: inverse of how much should be taken up by the flat edge)
 
 split_hub = true;                   // whether to split the hub into a separate square bit
@@ -34,18 +34,26 @@ n_teeth = 5;                        // number of teeth
 tooth_thingy_h = 12.9;              // height of the crescent shape removed from the teeth
 tooth_thingy_w = 1.5;               // width of the crescent shape removed from the teeth
 
+chevron_w = 4;                      // width of each chevron trench
+chevron_d = 1.5;                      // depth of each chevron trench
+chevron_a = 120;                    // angle the two parts of each chevron are to each other
+n_chevron = 12;                     // number of chevrons across surface of wheel
 
-hub_d = wheel_d - (hub_m*2) - (tyre_t * 2);     // outer diameter of the inner hub
+tyre_edge_trim_h = 1;               // height of the bit around the tyre edges to remove
+tyre_edge_trim_d = chevron_d;       // depth of the bit around the tyre edges to remove
+
+hub_d = wheel_d - (hub_m*2) - (tyre_t*2);     // outer diameter of the inner hub
 tooth_dz = (wheel_h - tooth_h) / 2;
 tooth_thingy_dx = (tooth_w) / 2;
 tooth_thingy_dh = (tooth_h - tooth_thingy_h) / 2;
 
-show_tyre = true;                 // whether to show the outer tyre
-show_wheel = true;                  // whether to show the inner hub
+show_tyre = false;                 // whether to show the outer tyre
+show_wheel = false;                  // whether to show the inner hub
 show_split_hub = true;              // whether to show the axel insert
 
-enable_hub_teeth = false;            // whether to enable teeth on the hub
+enable_hub_teeth = true;            // whether to enable teeth on the hub
 enable_tyre_teeth = true;           // whether to enable negative teeth in the tyres
+enable_chevrons = true;             // whether to show chevrons on the tyres
 
 $fn = 200;
 
@@ -125,11 +133,11 @@ if (show_tyre) {
     difference() {
         
         // outer diameter
-        cylinder(d=hub_d+(hub_m*2)+(tyre_t*2), h=wheel_h-0.001);
+        cylinder(d=wheel_d, h=wheel_h-0.001);
 
         // hole for the hub to go in
         translate([0, 0, -0.5])
-        cylinder(d=hub_d+(hub_m*2), h=wheel_h+1);
+        cylinder(d=(wheel_d-(tyre_t*2))-(hub_m*2), h=wheel_h+1);
 
         // negative teeth
         if (enable_tyre_teeth)
@@ -138,6 +146,24 @@ if (show_tyre) {
                 rotate([0, 0, i*(360/n_teeth)])
                 cresent_tooth();
             }
+        }
+
+        // chevrons
+        if (enable_chevrons) {
+            render() {
+                chevrons();
+            }
+        }
+
+        // edge trim
+        difference() {
+            union() {
+                cylinder(d=wheel_d, h=tyre_edge_trim_h);
+                translate([0, 0, wheel_h-tyre_edge_trim_h])
+                cylinder(d=wheel_d, h=tyre_edge_trim_h);
+            }
+            translate([0, 0, -0.5])
+            cylinder(d=wheel_d-tyre_edge_trim_d, h=wheel_d+1);
         }
     }
 }
@@ -275,5 +301,48 @@ module cresent_tooth() {
                 sphere(d=tooth_thingy_w);
             }
         }
+    }
+}
+
+
+module chevrons() {
+    difference() {
+        // chevron shapes
+        for (i=[0:n_chevron]) {
+            rotate([0, 0, i*(360/n_chevron)])
+            {
+
+                // chevron_dalf_w = (((wheel_h + (chevron_w*2))/2) / (cos(90 - (chevron_a/2))));
+                chevron_dalf_w = ((wheel_h + (chevron_w*2)) / 2) / (tan(chevron_a/2));
+                
+                // color("blue")
+                // rotate([-chevron_a/2, 0, 0])
+                // translate([0, -chevron_w/2, -chevron_w/2])
+                // cube([(wheel_d/2)+5, chevron_w, chevron_dalf_w]);
+
+                // color("green")
+                // rotate([chevron_a/2, 0, 0])
+                // translate([0, -chevron_w/2, -chevron_w/2])
+                // cube([(wheel_d/2)+5, chevron_w, chevron_dalf_w]);
+
+                translate([-(chevron_w+chevron_dalf_w)/2, 0, 0])
+                rotate([90, 0, 0])
+                linear_extrude((wheel_d/2) + 5)
+                polygon(points=[
+                    [0, wheel_h/2],
+                    [chevron_dalf_w, 0],
+                    [chevron_w+chevron_dalf_w, 0],
+                    [chevron_w, wheel_h/2],
+                    [chevron_w+chevron_dalf_w, wheel_h],
+                    [chevron_dalf_w, wheel_h],
+
+                ], convexity=10);
+
+            }
+        }
+
+        // remove the middle
+        translate([0, 0, -0.5])
+        cylinder(h=wheel_h+1, d=wheel_d-chevron_d);
     }
 }
