@@ -11,8 +11,9 @@
  *  - a logical OR gate (or NOR if you consider the spinner an inversion circle)
  */
 
-use <MCAD/boxes.scad>
+use <../MCAD/boxes.scad>
 use <micro_metal_bracket.scad>
+use <cat_led_shim.scad>
 
 ///////////////////////////////////////////
 //
@@ -266,6 +267,9 @@ interior_power_switch_mount_d = 3.5;
 // depth of the holes to make for the switch mounts
 interior_power_switch_mount_h = 4;
 
+// how far along the x-axis the led hole should be
+led_shim_x_offset = 47;
+
 /* [Wheels and Gearbox Size and Position] */
 
 // thickness / tread size of the wheels
@@ -399,7 +403,7 @@ wheel_h = wheel_tread + wheel_tread_padding;
 show_main_chassis = true;
 
 // whether to show the top lid
-show_top_lid = true;
+show_top_lid = false;
 
 // whether to show the bottom lid
 show_bottom_lid = true;
@@ -420,13 +424,16 @@ show_gearbox_axel = false;
 show_gearbox = false;
 
 // whether to show the spinner's area
-show_weapon = true;
+show_weapon = false;
 
 // whether to show the spinner motor
 show_weapon_motor = false;
 
 // whether to show the power switch
 show_switch = false;
+
+// whether to show the led shim
+show_led_shim = false;
 
 // show the mock lipo battery
 show_lipo = false;
@@ -674,6 +681,8 @@ module chassis_curved_sides(base_w, weapon_w, body_w, plough_w, base_d, base_d, 
     w_thickness = body_w;
     d_thickness = base_d;
 
+    echo("thickness of each curved side (max):", ((base_h)/2)*tpu_shielding_side_curving)
+
     // curved sides
     union() {
         // left side
@@ -852,6 +861,11 @@ module chassis_shell() {
             cylinder(d=interior_power_switch_mount_d, h=interior_power_switch_mount_h+1);
 
         }
+
+        // led shim hole
+        translate([led_shim_x_offset, base_w-interior_wall_thickness-interior_shelf_thickness, base_h/2])
+        rotate([270, 0, 0])
+        cat_led_shim();
     }
 
     // lid mounting posts
@@ -1381,6 +1395,16 @@ module interior_switch() {
 
 }
 
+/*
+ * LED shim
+*/
+module interior_led_shim() {
+    translate([led_shim_x_offset, base_w-interior_wall_thickness-interior_shelf_thickness, base_h/2])
+    rotate([270, 0, 0])
+    color("teal", 0.8)
+    cat_led_shim();
+}
+
 ///////////////////////////////////////////
 //
 //   Chassis Lids
@@ -1798,3 +1822,4 @@ if (show_gearbox)       explode(35) {
 
 if (show_lipo)          explode(20) interior_lipo();
 if (show_switch)        explode(30) interior_switch();
+if (show_led_shim)      explode(30) interior_led_shim();
