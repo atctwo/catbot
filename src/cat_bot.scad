@@ -1004,7 +1004,7 @@ module interior_gearbox_micro() {
     
     color("silver")
     translate([-6, -bracket_y_offset+2.5, 5])
-    import("imports/N20 v2.stl");
+    import("../imports/N20 v2.stl");
 }
 
 /*
