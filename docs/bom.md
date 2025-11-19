@@ -29,7 +29,7 @@ This page lists all the parts needed to build a Cat Bot.  This is a list of all 
 | M3x10 (countersunk)         | 8   | Mounting screws for lids; at least 10mm long |
 | M2x6 (countersunk)          | 4   | Mounting screws for the weapon motor       |
 | M2x8 (countersunk)          | 2   | Fixing the edge of the bottom lid to the chassis |
-| M2x8 (pan)                  | 4   | Screws to mount the weapon onto the motor (use wider / thicker heads to avoid the force of the weapon bending them)  |
+| M2x6 (pan)                  | 4   | Screws to mount the weapon onto the motor (use wider / thicker heads to avoid the force of the weapon bending them)  |
 | M2.5x4                      | 2   | Mounting the power switch to the chassis   |
 | **Inserts**                 |     |                                            |
 | M3x4                        | 8   | Mounts for motor brackets                  |
