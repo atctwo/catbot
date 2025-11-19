@@ -17,7 +17,7 @@ n_spokes = 5;                       // number of spokes
 spoke_t = 4;                        // thickness of each spoke
 spoke_h = 12;                       // height of each spoke
 shaft_d = 3.6;                      // shaft diameter
-shaft_flat_offset = 0.75;           // how much of the shaft should be curved (ie: inverse of how much should be taken up by the flat edge)
+shaft_flat_offset = 2.5/3;          // how much of the shaft should be curved (ie: inverse of how much should be taken up by the flat edge)
 
 split_hub = true;                   // whether to split the hub into a separate square bit
 split_hub_size = [7, 7];            // size of the split hub
@@ -48,8 +48,8 @@ tooth_thingy_dx = (tooth_w) / 2;
 tooth_thingy_dh = (tooth_h - tooth_thingy_h) / 2;
 
 show_tyre = false;                 // whether to show the outer tyre
-show_wheel = false;                  // whether to show the inner hub
-show_split_hub = true;              // whether to show the axel insert
+show_wheel = true;                  // whether to show the inner hub
+show_split_hub = false;              // whether to show the axel insert
 
 enable_hub_teeth = true;            // whether to enable teeth on the hub
 enable_tyre_teeth = true;           // whether to enable negative teeth in the tyres
@@ -194,8 +194,8 @@ module d_shaft() {
     translate([0, 0, -0.5])
     difference() {
         cylinder(d = shaft_d, h=wheel_h+1);
-        translate([shaft_flat_offset, -(shaft_d/2), 0])
-        cube([1.5, 3, wheel_h+1]);
+        translate([-split_hub_size.x/2, -split_hub_size.y/2, 0])
+        cube([((split_hub_size.x-shaft_d)/2)+(shaft_d*(1-shaft_flat_offset)), split_hub_size.x, wheel_h+1]);
     }
 }
 
