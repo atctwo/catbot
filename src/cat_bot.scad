@@ -1414,6 +1414,55 @@ module lid_top() {
                         interior_lid_thickness-lid_decoration_depth
                     ])
                     lid_main_decoration(lid_show_qrs_logo, 0, lid_show_whiskers);
+
+
+                    // lid_ears_outline_thickness = 10;
+                    // lid_ears_point_offsets_outer = [[11, 5], [32, 5], [22, 24]];
+                    // lid_ears_point_offsets_inner = [[11-lid_ears_outline_thickness, 5-lid_ears_outline_thickness], [32+lid_ears_outline_thickness, 5-lid_ears_outline_thickness], [22, 24+lid_ears_outline_thickness]];
+
+                    // #translate([0, 0, interior_lid_thickness-lid_decoration_depth + 20])
+                    // linear_extrude(lid_decoration_depth+1)
+                    // polygon(points=[
+                    //     [base_w - lid_ears_point_offsets_outer[0].x, base_d - lid_ears_point_offsets_outer[0].y],
+                    //     [base_w - lid_ears_point_offsets_outer[1].x, base_d - lid_ears_point_offsets_outer[1].y],
+                    //     [base_w - lid_ears_point_offsets_outer[2].x, base_d - lid_ears_point_offsets_outer[2].y],
+                    //     [base_w - lid_ears_point_offsets_inner[0].x, base_d - lid_ears_point_offsets_inner[0].y],
+                    //     [base_w - lid_ears_point_offsets_inner[1].x, base_d - lid_ears_point_offsets_inner[1].y],
+                    //     [base_w - lid_ears_point_offsets_inner[2].x, base_d - lid_ears_point_offsets_inner[2].y],
+
+                    // ], paths=[[0,1,2],[3,4,5]],convexity=10);
+
+                    // ears
+                    // lid_ears_scale = [0.95, 0.98, 1];
+                    // lid_ears_mask_size = [25, 15];
+                    
+                    // intersection() {
+                    //     translate([
+                    //         (base_w - (base_w * lid_ears_scale.x)) / 2,
+                    //         (base_d - (base_d * lid_ears_scale.y)) / 2,
+                    //         interior_lid_thickness - lid_decoration_depth
+                    //     ])
+                    //     scale(lid_ears_scale)
+                    //     lid();
+
+                    //     translate([base_w - lid_ears_mask_size.x, base_d - lid_ears_mask_size.y, 0])
+                    //     cube([lid_ears_mask_size.x, lid_ears_mask_size.y, interior_lid_thickness*2]);
+
+                    //     // translate([base_w - lid_ears_mask_size.x, 0, 0])
+                    //     // cube([lid_ears_mask_size.x, lid_ears_mask_size.y, interior_lid_thickness*2]);
+                    // }
+                    // intersection() {
+                    //     translate([
+                    //         (base_w - (base_w * lid_ears_scale.x)) / 2,
+                    //         (base_d - (base_d * lid_ears_scale.y)) / 2,
+                    //         interior_lid_thickness - lid_decoration_depth
+                    //     ])
+                    //     scale(lid_ears_scale)
+                    //     lid();
+
+                    //     translate([base_w - lid_ears_mask_size.x, 0, 0])
+                    //     cube([lid_ears_mask_size.x, lid_ears_mask_size.y, interior_lid_thickness*2]);
+                    // }
                 }
             }
 
