@@ -1377,7 +1377,7 @@ module interior_switch() {
         interior_wall_thickness+interior_shelf_thickness, 
         (base_h/2)+interior_power_switch_z_offset])
     rotate([90, 90, 0])
-    import("imports/switch.stl");
+    import("../imports/switch.stl");
 
 }
 
