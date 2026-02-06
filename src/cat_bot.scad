@@ -132,6 +132,9 @@ interior_lid_thickness = 3.5;
 // gap between outer edge of lids and inner edge of interior
 interior_lid_gap = 0.5;
 
+// use this param to split the lid into two halves - this is the height of the top half
+interior_lid_split = 2;
+
 // how thick the interior shelf should be
 interior_shelf_thickness = 2.5;
 
@@ -400,10 +403,13 @@ wheel_h = wheel_tread + wheel_tread_padding;
 /* [Visability] */
 
 // whether to show the main chassis
-show_main_chassis = true;
+show_main_chassis = false;
 
 // whether to show the top lid
-show_top_lid = false;
+show_top_lid = true;
+
+// whether to show the bottom and top halves of the lid
+show_top_lid_split = [true, true];
 
 // whether to show the bottom lid
 show_bottom_lid = true;
@@ -446,6 +452,9 @@ show_interior_colour = true;
 
 // whether to show colour on the lids
 show_lid_colour = true;
+
+// whether to show the top half of the lid in a different colour
+show_lid_split_colour = false; 
 
 // whether to show colour on the tpu shielding
 show_tpu_shielding_colour = true;
@@ -1516,6 +1525,34 @@ module lid_top() {
     }
 }
 
+// the top lid in two parts
+module lid_top_split() {
+
+    if (interior_lid_split == 0) lid_top();
+    else {
+
+        // bottom half
+        lid_top_bottom_c = show_lid_colour ? "#F5A9B8" : undef; color(lid_top_bottom_c)
+        if (show_top_lid_split[0])
+        difference() {
+            lid_top();
+            translate([0, 0, base_h-interior_lid_split])
+            cube([base_w, base_d, interior_lid_split]);
+        }
+
+        // top half
+        lid_top_top_c = show_lid_split_colour ? "#f26683" : lid_top_bottom_c; color(lid_top_top_c)
+        if (show_top_lid_split[1])
+        difference() {
+            lid_top();
+            translate([0, 0, base_h-interior_lid_thickness])
+            cube([base_w, base_d, interior_lid_thickness-interior_lid_split]);
+        }
+
+    }
+
+}
+
 // the bottom lid shape
 module lid_bottom() {
     lid_bottom_c = show_lid_colour ? "#5BCEFA" : undef; color(lid_bottom_c) {
@@ -1782,7 +1819,7 @@ module tpu_shielding() {
  */
 
 if (show_main_chassis)  explode(110) chassis_shell();
-if (show_top_lid)       explode(140) lid_top();
+if (show_top_lid)       explode(140) lid_top_split();
 if (show_bottom_lid)    explode(0)   lid_bottom();
 if (show_tpu_shielding) explode(120) tpu_shielding();
 
