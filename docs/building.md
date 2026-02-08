@@ -20,7 +20,7 @@ Most importantly, have fun and enjoy your new combat friend!
   - [Chassis and Weapon](#chassis-and-weapon)
 
 # Gather and Make Parts
-Most of the structural parts of the bot are designed to be 3D printed (or molded), while the rest can be purchased.  Full details are in the BOM but here's a quick summary of the main parts you'll need to print or make.
+Most of the structural parts of the bot are designed to be 3D printed (or molded), while the rest can be purchased.  An overview can be found in the BOM, but here are the full details.
 
 > [!NOTE]
 > When printing parts for the bot, pre-rendered renders of each part are provided in the [`renders`](../renders/) directory.  But if you're making changes to the OpenSCAD source, make sure to clone this repo's submodules (specifically [MCAD](https://github.com/openscad/MCAD), which this project depends on).  You can do this by running `git submodule update --init --recursive`.
