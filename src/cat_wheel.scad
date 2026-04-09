@@ -1,6 +1,6 @@
 /*
- * Cat Bot Wheels v3.0
- * made by alex (atctwo) in july - oct 2025
+ * Cat Bot Wheels v4.0
+ * made by alex (atctwo) in july - apr 2026
  * no idea how well these will work so i guess we'll see!
  * please print in something squishy and grippy (eg: TPU)
  *
@@ -12,6 +12,9 @@ hub_ot = 4;                         // thickness of the outer section of the hub
 hub_id = 16;                        // diameter of the inner hub
 hub_m = 0.1;                        // space between the hub and the tyre
 tyre_t = 4;                         // thickness of the outer tyre
+
+guard_t = 2;                        // thickness of the guard on both sides of the wheel
+guard_d = 40;                       // diameter of the guards
 
 n_spokes = 5;                       // number of spokes
 spoke_t = 4;                        // thickness of each spoke
@@ -26,12 +29,12 @@ split_hub_padding = 0.01;           // how much bigger to make the hub hole in t
 split_hub_chamfer_angle = 45;
 split_hub_chamfer_height = 1;
 
-tooth_h = 15;                       // height of teeth (perpendicular to height of the wheel)
+tooth_h = 12;                       // height of teeth (perpendicular to height of the wheel)
 tooth_w = 2;                        // width of the teeth (ie: how much do they extend from the hub)
 // tooth_a = 360 * ((-(2*$t) ^ 2) + (4*$t));
 tooth_a = 20;                       // tooth arc (ie: how much of a circle sweep does each tooth make)
 n_teeth = 5;                        // number of teeth
-tooth_thingy_h = 12.9;              // height of the crescent shape removed from the teeth
+tooth_thingy_h = 10;              // height of the crescent shape removed from the teeth
 tooth_thingy_w = 1.5;               // width of the crescent shape removed from the teeth
 
 chevron_w = 4;                      // width of each chevron trench
@@ -42,24 +45,28 @@ n_chevron = 12;                     // number of chevrons across surface of whee
 tyre_edge_trim_h = 1;               // height of the bit around the tyre edges to remove
 tyre_edge_trim_d = chevron_d;       // depth of the bit around the tyre edges to remove
 
+raw_wheel_h = wheel_h - (guard_t * 2);
 hub_d = wheel_d - (hub_m*2) - (tyre_t*2);     // outer diameter of the inner hub
-tooth_dz = (wheel_h - tooth_h) / 2;
+tooth_dz = (raw_wheel_h - tooth_h) / 2;
 tooth_thingy_dx = (tooth_w) / 2;
 tooth_thingy_dh = (tooth_h - tooth_thingy_h) / 2;
 
-show_tyre = false;                 // whether to show the outer tyre
+show_tyre = true;                   // whether to show the outer tyre
 show_wheel = true;                  // whether to show the inner hub
-show_split_hub = false;              // whether to show the axel insert
+show_split_hub = true;              // whether to show the axel insert
 
 enable_hub_teeth = true;            // whether to enable teeth on the hub
 enable_tyre_teeth = true;           // whether to enable negative teeth in the tyres
 enable_chevrons = true;             // whether to show chevrons on the tyres
+enable_guards = true;               // whether to enable tyre guards on both sides of the wheel
 
 $fn = 200;
 
 // main wheel
 if (show_wheel)
-color("#222222") {
+translate([0, 0, guard_t])
+// color("#222222") {
+color("#00ced1") {
     difference() {
 
         union() {
@@ -67,23 +74,23 @@ color("#222222") {
         difference() {
             
             // outer cylinder
-            cylinder(d=hub_d, h=wheel_h);
+            cylinder(d=hub_d, h=raw_wheel_h);
 
             // inner hollow
             translate([0, 0, -0.5])
-            cylinder(d=hub_d-(hub_ot*2), h=wheel_h+1);
+            cylinder(d=hub_d-(hub_ot*2), h=raw_wheel_h+1);
         }
 
         // spokes
         for (i=[0:n_spokes]) {
             rotate([0, 0, i*(360/n_spokes)])
-            translate([-spoke_t/2, 0, (wheel_h-spoke_h)/2])
+            translate([-spoke_t/2, 0, (raw_wheel_h-spoke_h)/2])
             cube([spoke_t, (hub_d/2)-(hub_ot/2), spoke_h]);
         }
 
         // inner bit
         difference() {
-            cylinder(d=hub_id, h=wheel_h);
+            cylinder(d=hub_id, h=raw_wheel_h);
         }
 
         // teeth
@@ -106,7 +113,7 @@ color("#222222") {
             split_hub_chamfer(split_hub_padding);
             
             // chamfer on top
-            translate([0, 0, wheel_h-split_hub_chamfer_height])
+            translate([0, 0, raw_wheel_h-split_hub_chamfer_height])
             rotate([0, 0, 0]) 
             split_hub_chamfer(split_hub_padding);
         }
@@ -116,6 +123,7 @@ color("#222222") {
 
 // split hub
 if (show_split_hub)
+translate([0, 0, guard_t])
 if (split_hub) {
     difference() {
         split_hub_hub();
@@ -126,18 +134,19 @@ if (split_hub) {
 
 
 // tyres
-if (show_tyre) {
+if (show_tyre)
+translate([0, 0, guard_t]) {
     
     translate([0, 0, 0.0005])
     color("#ffeeee", 0.9)
     difference() {
         
         // outer diameter
-        cylinder(d=wheel_d, h=wheel_h-0.001);
+        cylinder(d=wheel_d, h=raw_wheel_h-0.001);
 
         // hole for the hub to go in
         translate([0, 0, -0.5])
-        cylinder(d=(wheel_d-(tyre_t*2))-(hub_m*2), h=wheel_h+1);
+        cylinder(d=(wheel_d-(tyre_t*2))-(hub_m*2), h=raw_wheel_h+1);
 
         // negative teeth
         if (enable_tyre_teeth)
@@ -159,7 +168,7 @@ if (show_tyre) {
         difference() {
             union() {
                 cylinder(d=wheel_d, h=tyre_edge_trim_h);
-                translate([0, 0, wheel_h-tyre_edge_trim_h])
+                translate([0, 0, raw_wheel_h-tyre_edge_trim_h])
                 cylinder(d=wheel_d, h=tyre_edge_trim_h);
             }
             translate([0, 0, -0.5])
@@ -168,12 +177,26 @@ if (show_tyre) {
     }
 }
 
+// tyre guards
+color("gray")
+if (show_wheel)
+if (enable_guards) {
+    difference() {
+        union() {
+            cylinder(d=guard_d, h=guard_t);
+            translate([0, 0, raw_wheel_h+guard_t])
+            cylinder(d=guard_d, h=guard_t);
+        }
+        translate([0, 0, -0.5])
+        cylinder(d=hub_d-(hub_ot*2), h=wheel_h+1);
+    }
+}
 
 
 
 module split_hub_hub(padding=0, ph=0) {
-    translate([0, 0, (wheel_h/2)])
-    cube([split_hub_size.x+padding*2, split_hub_size.y+padding*2, wheel_h+ph], center=true);
+    translate([0, 0, (raw_wheel_h/2)])
+    cube([split_hub_size.x+padding*2, split_hub_size.y+padding*2, raw_wheel_h+ph], center=true);
 }
 
 module split_hub_chamfer(padding=0) {
@@ -193,9 +216,9 @@ module split_hub_chamfer(padding=0) {
 module d_shaft() {
     translate([0, 0, -0.5])
     difference() {
-        cylinder(d = shaft_d, h=wheel_h+1);
+        cylinder(d = shaft_d, h=raw_wheel_h+1);
         translate([-split_hub_size.x/2, -split_hub_size.y/2, 0])
-        cube([((split_hub_size.x-shaft_d)/2)+(shaft_d*(1-shaft_flat_offset)), split_hub_size.x, wheel_h+1]);
+        cube([((split_hub_size.x-shaft_d)/2)+(shaft_d*(1-shaft_flat_offset)), split_hub_size.x, raw_wheel_h+1]);
     }
 }
 
@@ -278,7 +301,7 @@ module cresent_tooth() {
         // #cube([hub_d+(tooth_w*2), hub_d, tooth_h+1]);
 
         // arx
-        linear_extrude(h=wheel_h)
+        linear_extrude(h=raw_wheel_h)
         sector(hub_d, [0, 360-tooth_a]);
 
         // tooth thingy left
@@ -312,8 +335,8 @@ module chevrons() {
             rotate([0, 0, i*(360/n_chevron)])
             {
 
-                // chevron_dalf_w = (((wheel_h + (chevron_w*2))/2) / (cos(90 - (chevron_a/2))));
-                chevron_dalf_w = ((wheel_h + (chevron_w*2)) / 2) / (tan(chevron_a/2));
+                // chevron_dalf_w = (((raw_wheel_h + (chevron_w*2))/2) / (cos(90 - (chevron_a/2))));
+                chevron_dalf_w = ((raw_wheel_h + (chevron_w*2)) / 2) / (tan(chevron_a/2));
                 
                 // color("blue")
                 // rotate([-chevron_a/2, 0, 0])
@@ -329,12 +352,12 @@ module chevrons() {
                 rotate([90, 0, 0])
                 linear_extrude((wheel_d/2) + 5)
                 polygon(points=[
-                    [0, wheel_h/2],
+                    [0, raw_wheel_h/2],
                     [chevron_dalf_w, 0],
                     [chevron_w+chevron_dalf_w, 0],
-                    [chevron_w, wheel_h/2],
-                    [chevron_w+chevron_dalf_w, wheel_h],
-                    [chevron_dalf_w, wheel_h],
+                    [chevron_w, raw_wheel_h/2],
+                    [chevron_w+chevron_dalf_w, raw_wheel_h],
+                    [chevron_dalf_w, raw_wheel_h],
 
                 ], convexity=10);
 
@@ -343,6 +366,6 @@ module chevrons() {
 
         // remove the middle
         translate([0, 0, -0.5])
-        cylinder(h=wheel_h+1, d=wheel_d-chevron_d);
+        cylinder(h=raw_wheel_h+1, d=wheel_d-chevron_d);
     }
 }
